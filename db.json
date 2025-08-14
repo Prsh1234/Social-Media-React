@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "id": "513c",
+      "email": "u1@mail.com",
+      "password": "a",
+      "confirmPassword": "a"
+    },
+    {
+      "id": "6acd",
+      "email": "vakele4032@ofionk.com",
+      "password": "$2b$10$FYfV1i0GwFKpUMYKfy.3Oug.b7CkkZXwHBkaZYm38FhgEN0BnZmSy"
+    }
+  ]
+}

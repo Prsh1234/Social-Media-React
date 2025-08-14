@@ -1,38 +1,411 @@
-.App {
-  text-align: center;
+html, body {
+  height: 100%;
+  margin: 0;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100%
+}
+
+
+.main-wrapper {
+  display: flex;
+  flex: 1;
+  height: 100%;
+
+}
+
+.main-body {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+  height: 100%
+}
+
+.header-nav-links {
+  display: flex;
+  gap: 20px;
+  margin: 0 auto; /* Keeps them centered */
+} 
+
+.logout{
+  display: block;
+  border: none;
+  background: none;
   color: white;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;  
 }
 
-.App-link {
-  color: #61dafb;
+
+/* css for header start */
+.Header {
+  background-color: rgb(19, 129, 184);
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  font-size: 18px;
+}
+.Header a {
+  color: white;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 4px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* css for header end */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Css for sidebar start*/
+
+.sidebar {
+  width: 200px;
+  background-color: rgb(250, 250, 250);
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar a,
+.sidebar a:visited {
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar ul {
+  list-style-type: none;
+}
+
+
+
+
+/*Css for sidebar end*/
+
+
+
+
+
+
+
+
+
+
+/* css for login and signup page start */
+
+.login{
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: #e3eaf2;
+}
+
+.login-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 350px;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-control {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn2 {
+
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  margin-top: 16px;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; 
+  box-sizing: border-box;
+  transition: background 0.3s;
+}
+
+.submit-btn2:hover {
+  background: #0056b3;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+.password-group{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; 
+}
+
+.error{
+  color: red;
+}
+
+/* css for login and signup page end */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*asdssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss*/
+
+/*Css for create post page start */
+
+.create-post-container {
+  display: flex;
+  justify-content: center; /* only horizontal centering */
+  padding: 2rem; /* spacing from top */
+
+  
+}
+
+/* Main post box */
+.create-post-card {
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 1rem;
+  width: 700px; /* shrink to content */
+}
+
+/* Profile picture placeholder */
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ccc;
+  flex-shrink: 0;
+}
+
+/* Text area styling */
+.post-input-area {
+  flex: 1;
+}
+
+.post-textarea {
+  width: 95%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  resize: none;
+  outline: none;
+}
+
+.post-textarea:focus {
+  border-color: #1da1f2;
+  box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+}
+
+/* Actions row */
+.post-actions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e1e8ed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Post button */
+.post-btn {
+  background: #aab8c2;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: not-allowed;
+  transition: background 0.2s ease;
+}
+
+.post-btn.active {
+  background: #1da1f2;
+  cursor: pointer;
+}
+
+.post-btn.active:hover {
+  background: #0d8ddb;
+}
+
+
+/* Css for create post page end */
+
+
+
+
+
+
+
+
+
+
+
+/*Css for post page start */
+.post-container {
+  display: flex;
+  flex-direction: column; /* stack posts vertically */
+  align-items: center; /* center horizontally */
+  gap: 1.5rem; /* space between each post */
+  padding: 2rem;
+}
+
+/* Main post box */
+.post-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 700px; /* limit width */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Profile picture placeholder */
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ccc;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Post data section */
+.post-data-area {
+  flex: 1;
+}
+
+.post-data-area h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+.post-data-area p {
+  margin: 0.3rem 0 0;
+  color: #333;
+  line-height: 1.4;
+  word-break: break-word; /* handle long words */
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .post-card {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .profile-pic {
+    margin-bottom: 0.5rem;
   }
 }
+/*Css for post page end */
