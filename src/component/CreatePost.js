@@ -1,18 +1,34 @@
-import { useState } from "react";
+import {  useState } from "react";
 import "../App.css";
 import { doPost } from "../services/post";
 
-const CreatePost = () => {
+const CreatePost = ({ onPostSuccess }) => {
   const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
   const handleChange = (e) => {
     setContent(e.target.value);
   }
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
   const handlePost = async () => {
     const userId = localStorage.getItem("userId");
-    const result = await doPost({ content: content, userId: userId });
+    const formData = new FormData();
+    formData.append("content", content);
+    formData.append("userId", userId);
+    if (image) {
+      formData.append("image", image);
+      console.log(image);
+    }
+    const result = await doPost(formData, true);
     if (result.success) {
       console.log("Post saved!", result.data);
       setContent(""); // clear textarea
+      setImage(null); // clear image
+      if (onPostSuccess) onPostSuccess();
     } else {
       console.error("Error posting:", result.error);
     }
@@ -33,12 +49,16 @@ const CreatePost = () => {
             value={content}
             onChange={handleChange}
           />
-
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
           <div className="post-actions">
 
             <button
-              className={`post-btn ${content.trim() ? "active" : ""}`}
-              disabled={!content.trim()}
+              className={`post-btn ${content.trim() || image ? "active" : ""}`}
+              disabled={!content.trim() && !image}
               onClick={handlePost}
             >
               Post

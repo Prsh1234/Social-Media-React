@@ -5,7 +5,7 @@ html, body {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%
+  height: 100%;
 }
 
 
@@ -118,7 +118,7 @@ html, body {
 
 .login-container {
   display: flex;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   background: #e3eaf2;
@@ -335,15 +335,15 @@ html, body {
 
 
 /*Css for post page start */
+/* Post page styles - updated for images */
 .post-container {
   display: flex;
-  flex-direction: column; /* stack posts vertically */
-  align-items: center; /* center horizontally */
-  gap: 1.5rem; /* space between each post */
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
   padding: 2rem;
 }
 
-/* Main post box */
 .post-card {
   background: #fff;
   padding: 1.5rem;
@@ -352,8 +352,9 @@ html, body {
   display: flex;
   gap: 1rem;
   width: 100%;
-  max-width: 700px; /* limit width */
+  max-width: 700px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex-direction: column; /* stack content vertically */
 }
 
 .post-card:hover {
@@ -361,7 +362,6 @@ html, body {
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* Profile picture placeholder */
 .profile-pic {
   width: 60px;
   height: 60px;
@@ -369,6 +369,7 @@ html, body {
   background: #ccc;
   flex-shrink: 0;
   overflow: hidden;
+  margin-bottom: 0.5rem;
 }
 
 .profile-pic img {
@@ -377,7 +378,6 @@ html, body {
   object-fit: cover;
 }
 
-/* Post data section */
 .post-data-area {
   flex: 1;
 }
@@ -389,23 +389,37 @@ html, body {
 }
 
 .post-data-area p {
-  margin: 0.3rem 0 0;
+  margin: 0.3rem 0 0.8rem;
   color: #333;
   line-height: 1.4;
-  word-break: break-word; /* handle long words */
+  word-break: break-word;
+}
+
+/* Style for post image */
+.post-data-area img {
+  max-width: 100%;      /* never exceed card width */
+  max-height: 400px;    /* optional height limit */
+  width: auto;          /* keep aspect ratio */
+  height: auto;
+  margin-top: 10px;
+  border-radius: 12px;  /* rounded corners */
+  object-fit: cover;    /* crop nicely if needed */
+  display: block;
 }
 
 /* Responsive tweaks */
 @media (max-width: 768px) {
   .post-card {
     padding: 1rem;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
   }
-  
+
   .profile-pic {
     margin-bottom: 0.5rem;
   }
+
+  .post-data-area img {
+    max-height: 300px;  /* smaller on mobile */
+  }
 }
+
 /*Css for post page end */

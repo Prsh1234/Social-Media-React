@@ -1,33 +1,11 @@
 import { useEffect, useState } from "react";
 import { doGetUserPosts } from "../services/post";
 
-const Post = () => {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const userId = localStorage.getItem("userId");
-      const result = await doGetUserPosts(userId);
-  
-      if (result.success) {
-        console.log("Posts loaded!", result.data);
-        setPosts(result.data); // set posts state
-      } else {
-        console.error("Error loading posts:", result.error);
-      }
-    };
-  
-    fetchPosts();
-  }, []);
+const Post = ({ posts }) => {
+
 
   return (
-    // <div className="post-container">
-    //   <div className="post-card">
-    //     <div className="profile-pic"></div>
-    //     <div className="post-data-area">
 
-    //     </div>
-    //   </div>
-    // </div>
     <div className="post-container">
       {posts.map((post) => (
         <div key={post.id} className="post-card">
@@ -40,8 +18,15 @@ const Post = () => {
             /> */}
           </div>
           <div className="post-data-area">
-            <h4>{post.user.email}</h4>
+            <h4>{post.email}</h4>
             <p>{post.content}</p>
+            {post.imageBase64 && (
+              <img
+                src={`data:image/jpeg;base64,${post.imageBase64}`}
+                alt="Post"
+
+              />
+            )}
           </div>
         </div>
       ))}

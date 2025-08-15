@@ -1,18 +1,19 @@
 import axios from "axios";
 import CONFIG from "../config";
 
-export const doPost = async (post) => {
+export const doPost = async (post, isFormData = false) => {
   try {
-    const res = await axios.post(`${CONFIG.API_URL}/post/contentpost`, post, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    
-    // Optionally return the saved post from the backend
+    const res = await axios.post(
+      `${CONFIG.API_URL}/post/contentpost`,
+      post,
+      {
+        headers: isFormData
+          ? {} : { "Content-Type": "application/json" }
+      }
+    );
+
     return { success: true, data: res.data };
   } catch (error) {
-    // More descriptive error handling
     const message =
       error.response?.data?.message ||
       error.response?.data?.error ||
@@ -20,6 +21,7 @@ export const doPost = async (post) => {
     return { success: false, error: message };
   }
 };
+
 
 export const doGetUserPosts = async (userId) => {
   try {
