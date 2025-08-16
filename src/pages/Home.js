@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import CreatePost from "../component/CreatePost";
 import Post from "../component/Post";
-import { doGetUserPosts } from "../services/post";
+import { doGetTimelinePosts } from "../services/post";
 
 const Home = () => {
     const [posts, setPosts] = useState([]);
   
     const fetchPosts = async () => {
       const userId = localStorage.getItem("userId");
-      const result = await doGetUserPosts(userId);
+      const result = await doGetTimelinePosts(userId);
   
       if (result.success) {
         setPosts(result.data);
@@ -16,6 +16,9 @@ const Home = () => {
         console.error("Error loading posts:", result.error);
       }
     };
+
+  
+
   
     useEffect(() => {
       fetchPosts();

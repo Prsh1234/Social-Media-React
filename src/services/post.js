@@ -37,3 +37,18 @@ export const doGetUserPosts = async (userId) => {
     return { success: false, error: message };
   }
 };
+
+
+export const doGetTimelinePosts = async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+    const res = await axios.get(`${CONFIG.API_URL}/post/timelineposts?userId=${userId}`);
+    return { success: true, data: res.data };
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      "Failed to fetch posts";
+    return { success: false, error: message };
+  }
+};

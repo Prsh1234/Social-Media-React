@@ -2,30 +2,28 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { validateAuthToken } from "../services/auth";
 import Header from "./Header";
-import Sidebar from "./Sidebar";
-import Users from "./Users";
+import ProfileHeader from "./ProfileHeader";
 
-const HomeLayout = () => {
+const ProfileLayout = () => {
   const navigate = useNavigate();
+
+  // Validate auth on mount
   useEffect(() => {
     validateAuthToken(navigate);
   }, [navigate]);
 
-
   return (
     <div className="container">
       <Header />
+      <ProfileHeader />
+
       <div className="row main-wrapper">
-        <Sidebar />
         <div className="col main-body main-content">
           <Outlet />
         </div>
-        <div className="col main-body left-sidebar">
-          <Users />
-        </div>
       </div>
     </div>
+  );
+};
 
-  )
-}
-export default HomeLayout;
+export default ProfileLayout;

@@ -18,7 +18,7 @@ export const validateAuthToken = async (navigate) => {
     const authToken = localStorage.getItem("AUTH_TOKEN");
   
     if (!authToken) {
-      navigate("login");
+      navigate("/login");
       return false;
     }
   

@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { doGetUserPosts } from "../services/post";
+
 
 const Post = ({ posts }) => {
 
@@ -18,7 +17,7 @@ const Post = ({ posts }) => {
             /> */}
           </div>
           <div className="post-data-area">
-            <h4>{post.email}</h4>
+            <h4>{post.userName}</h4>
             <p>{post.content}</p>
             {post.imageBase64 && (
               <img
