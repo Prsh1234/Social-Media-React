@@ -1,5 +1,5 @@
 
-
+import '../css/Post.css'
 const Post = ({ posts }) => {
 
 
@@ -9,12 +9,15 @@ const Post = ({ posts }) => {
       {posts.map((post) => (
         <div key={post.id} className="post-card">
           <div className="profile-pic">
-            {/* You can show user's avatar if available */}
-            {/* <img
-              src={post.user.avatar || "/default-avatar.png"}
-              alt={post.user.name}
-              style={{ width: "50px", borderRadius: "50%" }}
-            /> */}
+            <img
+              src={
+                post.profilePic
+                  ? `data:image/jpeg;base64,${post.profilePic}`
+                  : "/assets/profile.jpg"
+              }
+              alt={"Profile Pic"}
+
+            />
           </div>
           <div className="post-data-area">
             <h4>{post.userName}</h4>

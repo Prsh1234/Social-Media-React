@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router";
-
+import "../css/Header.css";
+import { doLogout } from "../services/auth";
 const Header = () => {
     const navigate = useNavigate();
     const handleLogout = () => {
-        localStorage.removeItem("AUTH_TOKEN");
-        localStorage.removeItem("Email");        
-        localStorage.removeItem("userId");
-        navigate("/login");
+        doLogout(navigate);
     }
     return (
         <div className="row Header">

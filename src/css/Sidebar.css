@@ -1,0 +1,20 @@
+.sidebar {
+    width: 200px;
+    background-color: rgb(250, 250, 250);
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar a,
+  .sidebar a:visited {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+  }
+  
+  

@@ -3,6 +3,7 @@ import { NavLink } from "react-router";
 import { useNavigate } from "react-router";
 import { doLogin } from "../services/auth";
 import { validateLoginData } from "../utils/validateLoginData";
+import '../css/Login.css';
 
 const Login = () => {
     const navigate = useNavigate();

@@ -3,6 +3,7 @@ import CONFIG from "../config";
 export const AUTH_TOKEN="516fb57b-f2c5-4985-95e1-e3e4836d8bd4";
 
 
+
 export const doLogin = async (email, password) => {
     try {
         const res = await axios.post(`${CONFIG.API_URL}/auth/login`, { email, password });
@@ -13,6 +14,12 @@ export const doLogin = async (email, password) => {
         return { error: error.response?.data?.error || 'Login failed' };
     }
 };
+export const doLogout = (navigate) => {
+  localStorage.removeItem("AUTH_TOKEN");
+  localStorage.removeItem("Email");        
+  localStorage.removeItem("userId");
+  navigate("/login");
+}
 
 export const validateAuthToken = async (navigate) => {
     const authToken = localStorage.getItem("AUTH_TOKEN");

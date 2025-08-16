@@ -1,0 +1,19 @@
+.Header {
+  background-color: rgb(19, 129, 184);
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  font-size: 18px;
+}
+
+.Header a {
+  color: white;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 4px;
+}

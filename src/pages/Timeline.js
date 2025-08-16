@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import OwnPost from "../component/OwnPost";
+import OwnPost from "../pages/OwnPost";
 
 import { doGetUserPosts } from "../services/post";
 
 const Timeline = () => {
     const [posts, setPosts] = useState([]);
-    const { userId } = useParams();
+    const userId = localStorage.getItem("userId");
+
     const fetchPosts = async (userId) => {
       const result = await doGetUserPosts(userId);
       if (result.success) {
@@ -16,9 +16,6 @@ const Timeline = () => {
       }
     };
 
-  
-
-  
     useEffect(() => {
       fetchPosts(userId);
     }, [userId]);

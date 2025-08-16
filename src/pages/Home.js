@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CreatePost from "../component/CreatePost";
-import Post from "../component/Post";
+import Post from "../pages/Post";
 import { doGetTimelinePosts } from "../services/post";
 
 const Home = () => {

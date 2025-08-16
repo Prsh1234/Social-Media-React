@@ -1,0 +1,146 @@
+/* Wrapper */
+.profile-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    font-family: "Segoe UI", Arial, sans-serif;
+  }
+  
+  /* Title */
+  .profile-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1877f2;
+    text-align: center;
+  }
+  
+  /* Fields */
+  .profile-field {
+    margin-bottom: 1rem;
+  }
+  
+  .profile-field label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .profile-field input {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.2s;
+  }
+  
+  .profile-field input:focus {
+    border-color: #1877f2;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.15);
+  }
+  
+  /* Read-only email */
+  .profile-readonly {
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f5f5f5;
+    color: #555;
+  }
+  
+  /* Actions */
+  .profile-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .btn-edit {
+    background: #1877f2;
+    color: white;
+  }
+  
+  .btn-edit:hover {
+    background: #0f67d3;
+  }
+  
+  .btn-save {
+    background: #42b72a;
+    color: white;
+  }
+  
+  .btn-save:hover {
+    background: #369e23;
+  }
+  
+  .btn-cancel {
+    background: #e4e6eb;
+    color: #050505;
+  }
+  
+  .btn-cancel:hover {
+    background: #d8dadf;
+  }
+  
+
+  .profile-nav {
+    background-color: rgb(24, 159, 227);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: white;
+    font-size: 18px;
+    border-radius: 16px;
+    padding: 10px;
+  }
+
+  .profile-nav-links {
+    display: flex;               
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;                 
+    list-style: none;            
+    margin: 0;
+    padding: 0;
+  }
+  
+  .profile-nav-links li {
+    margin: 0;
+  }
+  
+  .profile-nav-links li a {
+    text-decoration: none;       /* remove underline */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  
+  .profile-nav-links li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Highlight active link automatically */
+  .profile-nav-links li a.active {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+  }

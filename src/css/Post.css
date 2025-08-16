@@ -1,0 +1,86 @@
+.post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .post-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 700px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex-direction: column; /* stack content vertically */
+  }
+  
+  .post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+  }
+  
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ccc;
+    flex-shrink: 0;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .post-data-area {
+    flex: 1;
+  }
+  
+  .post-data-area h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #1a1a1a;
+  }
+  
+  .post-data-area p {
+    margin: 0.3rem 0 0.8rem;
+    color: #333;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+  
+  /* Style for post image */
+  .post-data-area img {
+    max-width: 100%;      /* never exceed card width */
+    max-height: 400px;    /* optional height limit */
+    width: auto;          /* keep aspect ratio */
+    height: auto;
+    margin-top: 10px;
+    border-radius: 12px;  /* rounded corners */
+    object-fit: cover;    /* crop nicely if needed */
+    display: block;
+  }
+  
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .post-card {
+      padding: 1rem;
+    }
+  
+    .profile-pic {
+      margin-bottom: 0.5rem;
+    }
+  
+    .post-data-area img {
+      max-height: 300px;  /* smaller on mobile */
+    }
+  }
+  

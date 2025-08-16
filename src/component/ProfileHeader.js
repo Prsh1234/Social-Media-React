@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../ProfileHeader.css";
+import "../css/ProfileHeader.css";
 import { doUpload, getUserData } from "../services/user";
 
 const ProfileHeader = () => {
@@ -68,7 +68,6 @@ const ProfileHeader = () => {
 
   return (
     <div className="profile-header">
-      {/* Cover Photo as <img> */}
       <div className="cover-photo-wrapper">
         <img src={coverPreview} alt="Cover" className="cover-image" />
         <label className="cover-overlay">

@@ -1,10 +1,12 @@
-import {  useState } from "react";
-import "../App.css";
+import { useEffect, useState } from "react";
+import "../css/CreatePost.css";
 import { doPost } from "../services/post";
+import { getUserData } from "../services/user";
 
 const CreatePost = ({ onPostSuccess }) => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [user, setUser] = useState([]);
   const handleChange = (e) => {
     setContent(e.target.value);
   }
@@ -33,11 +35,34 @@ const CreatePost = ({ onPostSuccess }) => {
       console.error("Error posting:", result.error);
     }
   };
-  
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await getUserData();
+        if (response.success) {
+          setUser(response.data);
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
+    fetchUser();
+  }, []);
   return (
     <div className="create-post-container">
       <div className="create-post-card">
-        <div className="profile-pic"></div>
+        <div className="profile-pic">
+          <img
+            src={
+              user.profilePic
+                ? `data:image/jpeg;base64,${user.profilePic}`
+                : "/assets/profile.jpg"
+            }
+            alt={"Profile Pic"}
+          />
+        </div>
 
         <div className="post-input-area">
           <textarea

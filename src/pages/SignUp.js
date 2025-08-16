@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { registerUser } from "../services/user";
 import { validateSignUpData } from "../utils/validateSignUpData";
+import '../css/Login.css';
 
 const SignUp = () => {
     const navigate = useNavigate();

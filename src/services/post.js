@@ -24,9 +24,10 @@ export const doPost = async (post, isFormData = false) => {
 
 
 export const doGetUserPosts = async (userId) => {
+  const posterId = userId;
   try {
     const res = await axios.get(`${CONFIG.API_URL}/post/byuser`, {
-      params: { posterId: userId }, // <-- send posterId as query param
+      params: { posterId: posterId }, // <-- send posterId as query param
     });
     return { success: true, data: res.data };
   } catch (error) {
