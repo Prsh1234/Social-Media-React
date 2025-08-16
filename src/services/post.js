@@ -53,3 +53,17 @@ export const doGetTimelinePosts = async () => {
     return { success: false, error: message };
   }
 };
+
+export const deletePost = async (postId) => {
+  try {
+    const userId = localStorage.getItem("userId");
+    const res = await axios.delete(`${CONFIG.API_URL}/post/deletepost?postId=${postId}&userId=${userId}`); 
+    return { success: true, data: res.data };
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      "Failed to delete post";
+    return { success: false, error: message };
+  }
+};

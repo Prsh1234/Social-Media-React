@@ -11,20 +11,17 @@ const Profile = () => {
         userName: ""
     });
     const [editing, setEditing] = useState(false);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await getUserData();
-                if (response.success) {
-                    setUser(response.data);
-                }
-            } catch (err) {
-                console.error("Error fetching user:", err);
+    const userId = localStorage.getItem("userId");
+    const fetchUser = async (userId) => {
+        try {
+            const response = await getUserData(userId);
+            if (response.success) {
+                setUser(response.data);
             }
-        };
-        fetchUser();
-    }, []);
+        } catch (err) {
+            console.error("Error fetching user:", err);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,6 +39,9 @@ const Profile = () => {
             console.error("Error updating profile:", err);
         }
     };
+    useEffect(() => {
+        fetchUser(userId);
+    }, [userId]);
 
     return (
         <div className="profile-container">

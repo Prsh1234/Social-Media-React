@@ -1,4 +1,5 @@
 
+import { NavLink } from 'react-router';
 import '../css/Post.css'
 const Post = ({ posts }) => {
 
@@ -20,7 +21,7 @@ const Post = ({ posts }) => {
             />
           </div>
           <div className="post-data-area">
-            <h4>{post.userName}</h4>
+            <h4><NavLink to={`/friend/info/${post.posterId}`}>{post.userName}</NavLink></h4>
             <p>{post.content}</p>
             {post.imageBase64 && (
               <img

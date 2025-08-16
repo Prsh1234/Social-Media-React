@@ -23,7 +23,7 @@ const ProfileNav = () => {
         </li>
         <li>
           <NavLink 
-            to="/profile/friends/friends"
+            to="/profile/friends"
             className={({ isActive }) => isActive ? "active" : ""}
           >
             Friends

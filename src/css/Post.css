@@ -84,3 +84,21 @@
     }
   }
   
+  .delete-btn {
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .delete-btn{
+    background: #f02849; /* red background */
+    color: white;        /* white text */
+    width: 20%;
+  }
+  
+  .delete-btn:hover {
+    background: #c81e3a; /* darker red on hover */
+  }

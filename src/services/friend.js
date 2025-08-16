@@ -49,9 +49,8 @@ export const rejectFriendRequest = async (requestId) => {
 };
 
 
-export const getFriends = async () => {
+export const getFriends = async (userId) => {
     try {
-        const userId = localStorage.getItem("userId");
         const response = await axios.get(`${CONFIG.API_URL}/friend/getfriends`, {
             params: { userId: userId } // ✅ Correct way to send query params
         });

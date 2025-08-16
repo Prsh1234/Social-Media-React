@@ -43,20 +43,21 @@ const FriendRequests = () => {
                 <ul className="profile-nav-links">
                     <li>
                         <NavLink
-                            to="/profile/friends/friendRequests"
-                            className={({ isActive }) => isActive ? "active" : ""}
-                        >
-                            FriendRequests
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to="/profile/friends/friends"
+                            to="/profile/friends"
                             className={({ isActive }) => isActive ? "active" : ""}
                         >
                             Friends
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink
+                            to="/profile/friendRequests"
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            FriendRequests
+                        </NavLink>
+                    </li>
+
                 </ul>
             </div>
             <div className="request-list">
@@ -74,6 +75,8 @@ const FriendRequests = () => {
                             />                    </div>
                         <div className="user-list-name-area">
                             <h4>{request.userName}</h4>
+                            <h8>{request.mutual} mutual Friend</h8>
+
                         </div>
                         <div className="request-options">
                             <button

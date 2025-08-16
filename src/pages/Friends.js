@@ -6,15 +6,17 @@ import { getFriends, unfriend } from "../services/friend";
 
 const Friends = () => {
     const [friendList, setFriendList] = useState([]);
-    const fetchFriends = async () => {
-        const result = await getFriends();
+    const userId = localStorage.getItem("userId");
 
+    const fetchFriends = async (userId) => {
+        const result = await getFriends(userId);
         if (result.success) {
             setFriendList(result.data);
             console.log(result.data);
         } else {
             console.error("Error loading friends:", result.error);
         }
+
     }
 
     const handleunfriend = async (id) => {
@@ -25,28 +27,29 @@ const Friends = () => {
     };
 
     useEffect(() => {
-        fetchFriends();
-    }, []);
+        fetchFriends(userId);
+    }, [userId]);
     return (
         <div>
             <div className="profile-nav">
                 <ul className="profile-nav-links">
                     <li>
                         <NavLink
-                            to="/profile/friends/friendRequests"
-                            className={({ isActive }) => isActive ? "active" : ""}
-                        >
-                            FriendRequests
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to="/profile/friends/friends"
+                            to="/profile/friends"
                             className={({ isActive }) => isActive ? "active" : ""}
                         >
                             Friends
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink
+                            to="/profile/friendRequests"
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            FriendRequests
+                        </NavLink>
+                    </li>
+
                 </ul>
             </div>
             <div className="request-list">
@@ -64,13 +67,14 @@ const Friends = () => {
                             />                    </div>
                         <div className="user-list-name-area">
                             <h4>{friend.userName}</h4>
+                            <h8>{friend.mutual} mutual Friend</h8>
                         </div>
                         <div className="request-options">
                             <button
                                 className="requests-btn reject"
                                 onClick={() => handleunfriend(friend.id)}
                             >
-                                Reject
+                                Unfriend
                             </button>
                         </div>
                     </div>

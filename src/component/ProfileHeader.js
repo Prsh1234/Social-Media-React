@@ -6,14 +6,14 @@ const ProfileHeader = () => {
   const [coverPreview, setCoverPreview] = useState("/assets/cover.jpg");
   const [profilePreview, setProfilePreview] = useState("/assets/profile.jpg");
   const [username, setUsername] = useState("");
-
+  const userId = localStorage.getItem("userId");
   useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchUser(userId);
+  }, [userId]);
 
-  const fetchUser = async () => {
+  const fetchUser = async (userId) => {
     try {
-      const res = await getUserData();
+      const res = await getUserData(userId);
       const user = res.data;
 
       setCoverPreview(

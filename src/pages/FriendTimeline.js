@@ -1,7 +1,24 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { doGetUserPosts } from "../services/post";
 
 
-const OwnPost = ({ posts }) => {
+const FriendTimeline = () => {
+    const [posts, setPosts] = useState([]);
+    const { friendId } = useParams();
+    console.log(friendId);
+    const fetchPosts = async (friendId) => {
+      const result = await doGetUserPosts(friendId);
+      if (result.success) {
+        setPosts(result.data);
+      } else {
+        console.error("Error loading posts:", result.error);
+      }
+    };
 
+    useEffect(() => {
+      fetchPosts(friendId);
+    }, [friendId]);
 
     return (
   
@@ -38,4 +55,4 @@ const OwnPost = ({ posts }) => {
   
   }
   
-  export default OwnPost;
+  export default FriendTimeline;

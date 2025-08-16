@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { validateAuthToken } from "../services/auth";
+import FriendHeader from "./FriendHeader";
+import FriendNav from "./FriendNav";
 import Header from "./Header";
-import ProfileHeader from "./ProfileHeader";
-import ProfileNav from "./ProfileNav";
 import Sidebar from "./Sidebar";
 
 
-const ProfileLayout = () => {
+const FriendLayout = () => {
   const navigate = useNavigate();
 
   // Validate auth on mount
@@ -19,13 +19,13 @@ const ProfileLayout = () => {
     <div className="container">
       <div className="row profile-header-wrapper">
         <Header />
-        <ProfileHeader />
+        <FriendHeader />
       </div>
       <div className="row main-wrapper">
         <Sidebar />
 
         <div className="col main-body main-content">
-          <ProfileNav />
+          <FriendNav />
           <Outlet />
         </div>
 
@@ -34,4 +34,4 @@ const ProfileLayout = () => {
   );
 };
 
-export default ProfileLayout;
+export default FriendLayout;

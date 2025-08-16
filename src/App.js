@@ -10,6 +10,10 @@ import Profile from './pages/Profile';
 import Timeline from './pages/Timeline';
 import ChangePassword from './pages/ChangePassword';
 import Friends from './pages/Friends';
+import FriendTimeline from './pages/FriendTimeline';
+import FriendLayout from './component/FriendLayout';
+import FriendProfile from './pages/FriendProfile';
+import FriendofFriend from './pages/FriendofFriend';
 function App() {
   return (
     <>
@@ -25,12 +29,19 @@ function App() {
           </Route>
 
 
-          <Route path="/profile" element={<ProfileLayout />}>
+          <Route element={<ProfileLayout />}>
+            <Route path="/profile" element={<Navigate to="/profile/info" replace />} />
             <Route path="/profile/info" element={<Profile />} />
             <Route path="/profile/timeline" element={<Timeline />} />
             <Route path="/profile/changePassword" element={<ChangePassword />} />
-            <Route path="/profile/friends/friendRequests" element={<FriendRequests />} />
-            <Route path="/profile/friends/friends" element={<Friends />} />
+            <Route path="/profile/friendRequests" element={<FriendRequests />} />
+            <Route path="/profile/friends" element={<Friends />} />
+          </Route>
+
+          <Route element={<FriendLayout />}>
+            <Route path="/friend/info/:friendId" element={<FriendProfile />} />
+            <Route path="/friend/timeline/:friendId" element={<FriendTimeline />} />
+            <Route path="/friend/friends/:friendId" element={<FriendofFriend />} />
           </Route>
 
         </Routes>

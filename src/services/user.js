@@ -32,9 +32,8 @@ export const getAllUsers = async () => {
   }
 };
 
-export const getUserData = async () => {
+export const getUserData = async (userId) => {
   try {
-    const userId = localStorage.getItem("userId");
     console.log(userId);
     const response = await axios.get(`${CONFIG.API_URL}/user/userdata?currentUserId=${userId}`);
     return {
