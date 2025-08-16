@@ -1,42 +1,32 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import { getFriends, unfriend } from "../services/friend";
 
-import { acceptFriendRequest, GetFriendRequests, rejectFriendRequest } from "../services/friend";
 
 
-const FriendRequests = () => {
-    const [requestList, setRequestList] = useState([]);
-    const fetchRequests = async () => {
-        const userId = localStorage.getItem("userId");
-        const result = await GetFriendRequests(userId);
+const Friends = () => {
+    const [friendList, setFriendList] = useState([]);
+    const fetchFriends = async () => {
+        const result = await getFriends();
 
         if (result.success) {
-            setRequestList(result.data);
+            setFriendList(result.data);
             console.log(result.data);
         } else {
-            console.error("Error loading requests:", result.error);
+            console.error("Error loading friends:", result.error);
         }
-    };
+    }
 
-    const handleAccept = async (id) => {
-        const result = await acceptFriendRequest(id);
+    const handleunfriend = async (id) => {
+        const result = await unfriend(id);
         if (result.success) {
-            setRequestList(prev => prev.filter(r => r.requestId !== id));
+            setFriendList(prev => prev.filter(r => r.id !== id));
         }
     };
-
-    const handleReject = async (id) => {
-        const result = await rejectFriendRequest(id);
-        if (result.success) {
-            setRequestList(prev => prev.filter(r => r.requestId !== id));
-        }
-    };
-
 
     useEffect(() => {
-        fetchRequests();
+        fetchFriends();
     }, []);
-
     return (
         <div>
             <div className="profile-nav">
@@ -60,31 +50,25 @@ const FriendRequests = () => {
                 </ul>
             </div>
             <div className="request-list">
-                {requestList.map((request) => (
-                    <div key={request.requestId} className="request-list-card">
+                {friendList.map((friend) => (
+                    <div key={friend.id} className="request-list-card">
                         <div className="profile-pic">
                             <img
                                 src={
-                                    request.profilePic
-                                        ? `data:image/jpeg;base64,${request.profilePic}`
+                                    friend.profilePic
+                                        ? `data:image/jpeg;base64,${friend.profilePic}`
                                         : "/assets/profile.jpg"
                                 }
                                 alt={"Profile Pic"}
 
                             />                    </div>
                         <div className="user-list-name-area">
-                            <h4>{request.userName}</h4>
+                            <h4>{friend.userName}</h4>
                         </div>
                         <div className="request-options">
                             <button
-                                className="requests-btn accept"
-                                onClick={() => handleAccept(request.requestId)}
-                            >
-                                Accept
-                            </button>
-                            <button
                                 className="requests-btn reject"
-                                onClick={() => handleReject(request.requestId)}
+                                onClick={() => handleunfriend(friend.id)}
                             >
                                 Reject
                             </button>
@@ -96,4 +80,4 @@ const FriendRequests = () => {
     );
 };
 
-export default FriendRequests;
+export default Friends;

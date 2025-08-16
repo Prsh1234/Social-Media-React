@@ -9,6 +9,7 @@ import ProfileLayout from './component/ProfileLayout';
 import Profile from './pages/Profile';
 import Timeline from './pages/Timeline';
 import ChangePassword from './pages/ChangePassword';
+import Friends from './pages/Friends';
 function App() {
   return (
     <>
@@ -29,6 +30,7 @@ function App() {
             <Route path="/profile/timeline" element={<Timeline />} />
             <Route path="/profile/changePassword" element={<ChangePassword />} />
             <Route path="/profile/friends/friendRequests" element={<FriendRequests />} />
+            <Route path="/profile/friends/friends" element={<Friends />} />
           </Route>
 
         </Routes>

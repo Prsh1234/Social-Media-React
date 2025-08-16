@@ -47,3 +47,31 @@ export const rejectFriendRequest = async (requestId) => {
         return { success: false, message: "Server error" };
     }
 };
+
+
+export const getFriends = async () => {
+    try {
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get(`${CONFIG.API_URL}/friend/getfriends`, {
+            params: { userId: userId } // ✅ Correct way to send query params
+        });
+        return response.data; 
+    } catch (error) {
+        console.error("Fetching friend requests failed:", error);
+        return { success: false, message: "Server error" };
+    }
+};
+
+export const unfriend = async (friendId) => {
+    try {
+        const userId = localStorage.getItem("userId"); // <-- pass current user
+        console.log(userId,"asdfasdfasdf",friendId);
+        const response = await axios.post(
+            `${CONFIG.API_URL}/friend/unfriend?friendId=${friendId}&userId=${userId}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error("unfriend failed:", error);
+        return { success: false, message: "Server error" };
+    }
+};
