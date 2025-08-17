@@ -7,6 +7,7 @@ const CreatePost = ({ onPostSuccess }) => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [user, setUser] = useState([]);
+  const userId = localStorage.getItem("userId");
   const handleChange = (e) => {
     setContent(e.target.value);
   }
@@ -38,9 +39,9 @@ const CreatePost = ({ onPostSuccess }) => {
 
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUser = async (userId) => {
       try {
-        const response = await getUserData();
+        const response = await getUserData(userId);
         if (response.success) {
           setUser(response.data);
         }
@@ -48,8 +49,8 @@ const CreatePost = ({ onPostSuccess }) => {
         console.error("Error fetching user:", err);
       }
     };
-    fetchUser();
-  }, []);
+    fetchUser(userId);
+  }, [userId]);
   return (
     <div className="create-post-container">
       <div className="create-post-card">

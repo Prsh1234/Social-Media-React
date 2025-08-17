@@ -67,3 +67,16 @@ export const deletePost = async (postId) => {
     return { success: false, error: message };
   }
 };
+
+
+
+export const toggleLike = async (postId, userId) => {
+  try {
+    const res = await axios.post(`${CONFIG.API_URL}/post/like`, null, {
+      params: { postId, userId }
+    });
+    return { success: true, data: res.data };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+};
