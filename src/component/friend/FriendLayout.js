@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
-import { validateAuthToken } from "../services/auth";
+import { validateAuthToken } from "../../services/auth";
 import FriendHeader from "./FriendHeader";
 import FriendNav from "./FriendNav";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Header from "../Header";
+import Sidebar from "../Sidebar";
 
 
 const FriendLayout = () => {

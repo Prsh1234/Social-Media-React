@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 
-import { acceptFriendRequest, GetFriendRequests, rejectFriendRequest } from "../services/friend";
+import { acceptFriendRequest, GetFriendRequests, rejectFriendRequest } from "../../services/friend";
 
 
 const FriendRequests = () => {

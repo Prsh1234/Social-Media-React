@@ -1,5 +1,5 @@
 import { NavLink, useParams } from "react-router";
-import "../css/Profile.css";
+import "../../css/Profile.css";
 
 const FriendNav = () => {
     const { friendId } = useParams();

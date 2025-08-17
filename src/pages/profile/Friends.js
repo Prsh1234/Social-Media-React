@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
-import { getFriends, unfriend } from "../services/friend";
+import { getFriends, unfriend } from "../../services/friend";
 
 
 
@@ -64,7 +64,8 @@ const Friends = () => {
                                 }
                                 alt={"Profile Pic"}
 
-                            />                    </div>
+                            />
+                        </div>
                         <div className="user-list-name-area">
                             <h4>{friend.userName}</h4>
                             <h8>{friend.mutual} mutual Friend</h8>

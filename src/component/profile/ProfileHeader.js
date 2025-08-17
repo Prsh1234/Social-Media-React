@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../css/ProfileHeader.css";
-import { doUpload, getUserData } from "../services/user";
+import "../../css/ProfileHeader.css";
+import { doUpload, getUserData } from "../../services/user";
 
 const ProfileHeader = () => {
   const [coverPreview, setCoverPreview] = useState("/assets/cover.jpg");

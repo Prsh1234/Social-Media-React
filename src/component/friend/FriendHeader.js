@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import "../css/ProfileHeader.css";
-import { getUserData } from "../services/user";
+import "../../css/ProfileHeader.css";
+import { getUserData } from "../../services/user";
 
 const FriendHeader = () => {
     const [coverPreview, setCoverPreview] = useState("/assets/cover.jpg");

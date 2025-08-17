@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getUserData, updateProfile } from "../services/user";
-import "../css/Profile.css";
+import { getUserData, updateProfile } from "../../services/user";
+import "../../css/Profile.css";
 import { NavLink } from "react-router";
 
 const Profile = () => {

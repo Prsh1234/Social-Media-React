@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getUserData } from "../services/user";
-import "../css/FriendProfile.css"; // use a new CSS file
+import { getUserData } from "../../services/user";
+import "../../css/FriendProfile.css"; // use a new CSS file
 import { useParams } from "react-router";
 
 const FriendProfile = () => {

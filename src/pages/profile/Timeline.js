@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deletePost, doGetUserPosts } from "../services/post";
+import { deletePost, doGetUserPosts } from "../../services/post";
 
 const Timeline = () => {
   const [posts, setPosts] = useState([]);

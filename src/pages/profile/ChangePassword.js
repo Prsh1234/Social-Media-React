@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { doLogout } from "../services/auth";
-import { changePassword } from "../services/user";
-import { validatePassword } from "../utils/validateSignUpData";
+import { doLogout } from "../../services/auth";
+import { changePassword } from "../../services/user";
+import { validatePassword } from "../../utils/validateSignUpData";
 
 const ChangePassword = () => {
     const navigate = useNavigate();

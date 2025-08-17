@@ -80,7 +80,13 @@ const Post = ({ posts }) => {
           </div>
           <div className="post-data-area">
             <h4>
-              <NavLink to={`/friend/info/${post.posterId}`}>
+              <NavLink
+                to={
+                  post.posterId === parseInt(userId)
+                    ? "/profile/info"
+                    : `/friend/info/${post.posterId}`
+                }
+              >
                 {post.userName}
               </NavLink>
             </h4>

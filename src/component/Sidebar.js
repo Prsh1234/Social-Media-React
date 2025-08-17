@@ -6,7 +6,7 @@ const Sidebar = () => {
             <ul>
                 <li><NavLink to="/home">NewsFeed</NavLink></li>
                 <li><NavLink to="/profile/info">Profile</NavLink></li>
-                <li><NavLink to="/admin/users">Messaging</NavLink></li>
+                <li><NavLink to="/chat">Message</NavLink></li>
 
             </ul>
         </div>

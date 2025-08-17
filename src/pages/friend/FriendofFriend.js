@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getFriends} from "../services/friend";
+import { getFriends} from "../../services/friend";
 
 
 

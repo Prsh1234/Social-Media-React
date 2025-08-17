@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
-import { validateAuthToken } from "../services/auth";
-import Header from "./Header";
+import { validateAuthToken } from "../../services/auth";
+import Header from "../Header";
 import ProfileHeader from "./ProfileHeader";
 import ProfileNav from "./ProfileNav";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 
 
 const ProfileLayout = () => {

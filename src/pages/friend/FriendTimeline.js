@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { doGetUserPosts } from "../services/post";
+import { doGetUserPosts } from "../../services/post";
 
 
 const FriendTimeline = () => {
