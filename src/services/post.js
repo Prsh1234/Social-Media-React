@@ -1,14 +1,18 @@
 import axios from "axios";
 import CONFIG from "../config";
-
+const token = localStorage.getItem("AUTH_TOKEN");
 export const doPost = async (post, isFormData = false) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const res = await axios.post(
       `${CONFIG.API_URL}/post/contentpost`,
       post,
       {
-        headers: isFormData
-          ? {} : { "Content-Type": "application/json" }
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        },
       }
     );
 
@@ -27,6 +31,7 @@ export const doGetUserPosts = async (userId) => {
   const posterId = userId;
   try {
     const res = await axios.get(`${CONFIG.API_URL}/post/byuser`, {
+      headers: { Authorization: `Bearer ${token}` },
       params: { posterId: posterId }, // <-- send posterId as query param
     });
     return { success: true, data: res.data };
@@ -43,7 +48,10 @@ export const doGetUserPosts = async (userId) => {
 export const doGetTimelinePosts = async () => {
   try {
     const userId = localStorage.getItem("userId");
-    const res = await axios.get(`${CONFIG.API_URL}/post/timelineposts?userId=${userId}`);
+    const res = await axios.get(`${CONFIG.API_URL}/post/timelineposts?userId=${userId}`,
+    {
+        headers: { Authorization: `Bearer ${token}` }
+    });
     return { success: true, data: res.data };
   } catch (error) {
     const message =
@@ -57,7 +65,10 @@ export const doGetTimelinePosts = async () => {
 export const deletePost = async (postId) => {
   try {
     const userId = localStorage.getItem("userId");
-    const res = await axios.delete(`${CONFIG.API_URL}/post/deletepost?postId=${postId}&userId=${userId}`); 
+    const res = await axios.delete(`${CONFIG.API_URL}/post/deletepost?postId=${postId}&userId=${userId}`,
+    {
+        headers: { Authorization: `Bearer ${token}` }
+    }); 
     return { success: true, data: res.data };
   } catch (error) {
     const message =
@@ -73,6 +84,7 @@ export const deletePost = async (postId) => {
 export const toggleLike = async (postId, userId) => {
   try {
     const res = await axios.post(`${CONFIG.API_URL}/post/like`, null, {
+      headers: { Authorization: `Bearer ${token}` },
       params: { postId, userId }
     });
     return { success: true, data: res.data };

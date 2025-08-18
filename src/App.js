@@ -15,6 +15,8 @@ import FriendLayout from './component/friend/FriendLayout';
 import FriendProfile from './pages/friend/FriendProfile';
 import FriendofFriend from './pages/friend/FriendofFriend';
 import ChatLayout from './component/chat/ChatLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminLayout from './component/admin/AdminLayout';
 function App() {
   return (
     <>
@@ -31,7 +33,7 @@ function App() {
           </Route>
 
 
-            <Route path="/chat" element={<ChatLayout />} />
+          <Route path="/chat" element={<ChatLayout />} />
 
 
 
@@ -49,6 +51,11 @@ function App() {
             <Route path="/friend/timeline/:friendId" element={<FriendTimeline />} />
             <Route path="/friend/friends/:friendId" element={<FriendofFriend />} />
           </Route>
+
+          <Route path="/admin" element={localStorage.getItem("role") === "ADMIN" ? <AdminLayout /> : <Navigate to="/home" />} >
+            <Route path="/admin/Dashboard" element={<AdminDashboard />} />
+          </Route>
+
 
         </Routes>
       </BrowserRouter>

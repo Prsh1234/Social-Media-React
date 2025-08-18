@@ -1,0 +1,72 @@
+.user {
+    width: 100%;
+}
+
+.user th,
+.user td {
+    padding: 12px 16px;
+    /* Adjust padding as needed */
+    text-align: left;
+    /* Optional: aligns text nicely */
+
+}
+
+.user {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    min-width: 600px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    /* For border-radius to work on table */
+}
+
+.user thead {
+    background-color: #0077cc;
+    color: white;
+    text-align: left;
+}
+
+.user tbody tr:hover {
+    background-color: #f1f9ff;
+}
+
+.user tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+
+.user-options {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 17px;
+
+}
+
+.user-button {
+    padding: 10px;
+    margin-top: 16px;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.delete-option {
+    background: #ff0000;
+}
+
+.edit-option {
+    background: #00ff26;
+}
+
+.view-option {
+    background: #2604ff;
+}

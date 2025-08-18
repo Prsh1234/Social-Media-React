@@ -2,11 +2,11 @@ import axios from "axios";
 import CONFIG from "../config";
 
 
-
+const token = localStorage.getItem("AUTH_TOKEN");
 
 export const registerUser = async (newUser) => {
   try {
-    const response = await axios.post(`${CONFIG.API_URL}/register`, newUser);
+    const response = await axios.post(`${CONFIG.API_URL}/auth/register`, newUser);
     console.log("Registering user:", newUser);
     return response.data; // { success: true/false, message: "..." }
   } catch (error) {
@@ -18,7 +18,10 @@ export const registerUser = async (newUser) => {
 export const getAllUsers = async () => {
   try {
     const userId = localStorage.getItem("userId");
-    const response = await axios.get(`${CONFIG.API_URL}/user/allusers?currentUserId=${userId}`);
+    const response = await axios.get(`${CONFIG.API_URL}/user/allusers?currentUserId=${userId}`,
+    {
+        headers: { Authorization: `Bearer ${token}` }
+    });
     return {
       success: true,
       data: response.data, // assuming response.data is an array of users
@@ -35,7 +38,10 @@ export const getAllUsers = async () => {
 export const getUserData = async (userId) => {
   try {
     console.log(userId);
-    const response = await axios.get(`${CONFIG.API_URL}/user/userdata?currentUserId=${userId}`);
+    const response = await axios.get(`${CONFIG.API_URL}/user/userdata?currentUserId=${userId}`,
+    {
+        headers: { Authorization: `Bearer ${token}` }
+    });
     return {
       success: true,
       data: response.data, // assuming response.data is an array of users
@@ -52,27 +58,33 @@ export const getUserData = async (userId) => {
 export const updateProfile = async (userData) => {
   try {
     const userId = localStorage.getItem("userId");
-    const response = await axios.put(`${CONFIG.API_URL}/user/updateProfile?currentUserId=${userId}`, userData);
-    return {
-      success: true,
-      data: response.data, // assuming response.data is an array of users
-    };
+    const token = localStorage.getItem("AUTH_TOKEN");
+
+    const response = await axios.put(
+      `${CONFIG.API_URL}/user/updateProfile?currentUserId=${userId}`,
+      userData,
+      {
+        headers: { Authorization: `Bearer ${token}` } // include token
+      }
+    );
+
+    return { success: true, data: response.data };
   } catch (error) {
     console.error("Error saving users:", error);
-    return {
-      success: false,
-      error: error.message || "Unknown error",
-    };
+    return { success: false, error: error.message || "Unknown error" };
   }
 };
-
 export const changePassword = async ({ currentPassword, newPassword }) => {
   try {
     const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     const response = await axios.put(
       `${CONFIG.API_URL}/user/changePassword?currentUserId=${userId}`,
-      { currentPassword, newPassword }
+      { currentPassword, newPassword }, // body
+      { headers: { Authorization: `Bearer ${token}` } } // headers
     );
+
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Error changing password:", error);
@@ -80,11 +92,13 @@ export const changePassword = async ({ currentPassword, newPassword }) => {
   }
 };
 
+
 export const doUpload = async (file, type, userId) => {
   try {
+    const token = localStorage.getItem("AUTH_TOKEN");
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("type", type); // "profile" or "cover"
+    formData.append("type", type);
     formData.append("userId", userId);
 
     const res = await axios.post(
@@ -93,6 +107,7 @@ export const doUpload = async (file, type, userId) => {
       {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}` // include token
         },
       }
     );
