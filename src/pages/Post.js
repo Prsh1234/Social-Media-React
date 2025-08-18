@@ -3,12 +3,12 @@ import { NavLink } from "react-router";
 import "../css/Post.css";
 import { doGetComments, doPostComment } from "../services/comment"; // example service
 import { toggleLike } from "../services/post";
+import { doReport } from "../services/report";
 
-const Post = ({ posts }) => {
+const Post = ({ posts, onRemove }) => {
   const [comments, setComments] = useState({}); // { postId: [comments] }
   const [commentInputs, setCommentInputs] = useState({}); // { postId: "text" }
   const [visiblePosts, setVisiblePosts] = useState({}); // track open/close state
-
   const userId = localStorage.getItem("userId");
   const [postStates, setPostStates] = useState({});
   useEffect(() => {
@@ -19,6 +19,27 @@ const Post = ({ posts }) => {
       }, {})
     );
   }, [posts]);
+
+
+
+
+  const handleReport = async (postId) => {
+    try {
+      const res = await doReport(postId, userId);
+
+      if (res.data.success) {
+        if (onRemove) onRemove(postId);  // 🔥 remove from parent state
+      } else {
+        alert("Failed to report post: " + res.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error reporting post");
+    }
+  }
+
+
+
   const handleLike = async (postId) => {
     const result = await toggleLike(postId, userId);
     if (result.success) {
@@ -105,6 +126,12 @@ const Post = ({ posts }) => {
                 {postStates[post.id]?.liked ? "💙 Unlike" : "🤍 Like"}
               </button>
               <span>{postStates[post.id]?.likeCount || 0} likes</span>
+              <button
+                onClick={() => handleReport(post.id)}
+                className="report-btn"
+              >
+                 Report
+              </button>
             </div>
             {/* Comments Button */}
             <button onClick={() => handleToggleComments(post.id)}>

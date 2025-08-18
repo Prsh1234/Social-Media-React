@@ -4,8 +4,9 @@ import "../css/Header.css";
 import { doLogout } from "../services/auth";
 import axios from "axios";
 import CONFIG from "../config";
+const token = localStorage.getItem("AUTH_TOKEN");
 
-const Header = ({ currentUserId }) => {
+const Header = () => {
     const navigate = useNavigate();
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -22,7 +23,10 @@ const Header = ({ currentUserId }) => {
             try {
                 const res = await axios.get(
                     `${CONFIG.API_URL}/user/search`,
-                    { params: { username: value } }
+                    {
+                        params: { username: value },
+                        headers: { Authorization: `Bearer ${token}` } // add your token here
+                    }
                 );
                 setResults(res.data);
             } catch (err) {

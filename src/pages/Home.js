@@ -18,7 +18,9 @@ const Home = () => {
     };
 
   
-
+    const handlePostRemoved = (postId) => {
+      setPosts(prev => prev.filter(p => p.id !== postId));
+    };
   
     useEffect(() => {
       fetchPosts();
@@ -27,7 +29,7 @@ const Home = () => {
     return (
       <div>
         <CreatePost onPostSuccess={fetchPosts} />
-        <Post posts={posts} />
+        <Post posts={posts} onRemove={handlePostRemoved}/>
       </div>
     );
   };
