@@ -27,12 +27,12 @@ export const doPost = async (post, isFormData = false) => {
 };
 
 
-export const doGetUserPosts = async (userId) => {
+export const doGetUserPosts = async (userId, page = 0, size = 5 ) => {
   const posterId = userId;
   try {
     const res = await axios.get(`${CONFIG.API_URL}/post/byuser`, {
       headers: { Authorization: `Bearer ${token}` },
-      params: { posterId: posterId }, // <-- send posterId as query param
+      params: { posterId: posterId,userId, page, size }, // <-- send posterId as query param
     });
     return { success: true, data: res.data };
   } catch (error) {
@@ -45,13 +45,16 @@ export const doGetUserPosts = async (userId) => {
 };
 
 
-export const doGetTimelinePosts = async () => {
+export const doGetTimelinePosts = async (page = 0, size = 5) => {
   try {
     const userId = localStorage.getItem("userId");
-    const res = await axios.get(`${CONFIG.API_URL}/post/timelineposts?userId=${userId}`,
-    {
+    const res = await axios.get(
+      `${CONFIG.API_URL}/post/timelineposts`,
+      {
+        params: { userId, page, size },
         headers: { Authorization: `Bearer ${token}` }
-    });
+      }
+    );
     return { success: true, data: res.data };
   } catch (error) {
     const message =

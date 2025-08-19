@@ -1,80 +1,374 @@
-
 .create-post-container {
-    display: flex;
-    justify-content: center; /* only horizontal centering */
-    padding: 2rem; /* spacing from top */
-  
-    
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+
+}
+
+.create-post-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+
+.create-post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 10px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+.profile-pic::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  z-index: -1;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.profile-pic:hover img {
+  transform: scale(1.1);
+}
+
+.post-input-area {
+  flex: 1;
+}
+
+.post-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  border: 2px solid rgba(226, 232, 240, 0.6);
+  border-radius: 16px;
+  resize: vertical;
+  outline: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: all 0.3s ease;
+  background: rgba(247, 250, 252, 0.5);
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+.post-textarea:focus {
+  border-color: #667eea;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 0 0 4px rgba(102, 126, 234, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.post-textarea::placeholder {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* File Input Styling */
+.file-input-wrapper {
+  position: relative;
+  margin: 1rem 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.file-input {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+.file-input-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #4a5568;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.file-input-label:hover {
+  background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.file-input-label::before {
+  content: '📎';
+  font-size: 1.2rem;
+}
+
+/* Image Preview */
+.image-preview {
+  margin-top: 1rem;
+  border-radius: 12px;
+  position: relative;
+  display: inline-block;
+  /* Remove fixed max-width/max-height for the container itself */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview img {
+  display: block;
+  max-width: 200px;  /* maximum width */
+  max-height: 200px; /* maximum height */
+  width: auto;       /* adapt width according to aspect ratio */
+  height: auto;      /* adapt height according to aspect ratio */
+  border-radius: 12px; /* apply here */
+}
+
+
+
+
+
+
+
+
+.image-preview:hover img {
+  transform: scale(1.05);
+}
+
+.remove-image {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #e53e3e;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.remove-image:hover {
+  background: rgba(229, 62, 62, 0.1);
+  transform: scale(1.1);
+}
+
+/* Post Actions */
+.post-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.character-count {
+  font-size: 0.9rem;
+  color: #718096;
+  background: rgba(113, 128, 150, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.character-count.warning {
+  color: #d69e2e;
+  background: rgba(214, 158, 46, 0.1);
+}
+
+.character-count.error {
+  color: #e53e3e;
+  background: rgba(229, 62, 62, 0.1);
+}
+
+.post-btn {
+  background: linear-gradient(135deg, #a0aec0 0%, #90a3b4 100%);
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: not-allowed;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+}
+
+.post-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.post-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.post-btn.active:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.post-btn.active:hover::before {
+  left: 100%;
+}
+
+.post-btn.posting {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  cursor: wait;
+}
+
+.post-btn.posting::after {
+  content: '';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
   }
-  
-  /* Main post box */
-  .create-post-card {
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    display: flex;
-    gap: 1rem;
-    width: 700px; /* shrink to content */
+}
+
+/* Success Animation */
+.post-success {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(56, 161, 105, 0.4);
+  font-weight: 600;
+  transform: translateX(400px);
+  animation: slideIn 0.3s ease forwards, slideOut 0.3s ease 2.7s forwards;
+  z-index: 1000;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
   }
-  
-  /* Profile picture placeholder */
-  .profile-pic {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #ccc;
-    flex-shrink: 0;
+}
+
+@keyframes slideOut {
+  to {
+    transform: translateX(400px);
   }
-  
-  /* Text area styling */
-  .post-input-area {
-    flex: 1;
-  }
-  
-  .post-textarea {
-    width: 95%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .create-post-container {
     padding: 1rem;
-    font-size: 1.2rem;
-    border: 1px solid #e1e8ed;
-    border-radius: 12px;
-    resize: none;
-    outline: none;
   }
   
-  .post-textarea:focus {
-    border-color: #1da1f2;
-    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
-  }
-  
-  /* Actions row */
-  .post-actions {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e1e8ed;
-    display: flex;
-    justify-content: space-between;
+  .create-post-card {
+    padding: 1.5rem;
+    flex-direction: column;
     align-items: center;
   }
   
-  /* Post button */
+  .profile-pic {
+    margin-bottom: 1rem;
+  }
+  
+  .post-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
   .post-btn {
-    background: #aab8c2;
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border: none;
-    border-radius: 999px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: not-allowed;
-    transition: background 0.2s ease;
+    width: 100%;
   }
   
-  .post-btn.active {
-    background: #1da1f2;
-    cursor: pointer;
+  .post-success {
+    right: 1rem;
+    left: 1rem;
+    transform: translateY(-100px);
+    animation: slideInMobile 0.3s ease forwards, slideOutMobile 0.3s ease 2.7s forwards;
   }
-  
-  .post-btn.active:hover {
-    background: #0d8ddb;
+}
+
+@keyframes slideInMobile {
+  to {
+    transform: translateY(0);
   }
-  
+}
+
+@keyframes slideOutMobile {
+  to {
+    transform: translateY(-100px);
+  }
+}
+
+/* Focus Styles */
+.create-post-card:focus-within {
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 10px 20px rgba(0, 0, 0, 0.08),
+    0 0 0 4px rgba(102, 126, 234, 0.1);
+}

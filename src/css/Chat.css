@@ -1,8 +1,4 @@
 /* Layout */
-.main-wrapper {
-  display: flex;
-  height: 100vh;
-}
 
 .sidebar {
   border-right: 1px solid #ccc;
@@ -11,10 +7,6 @@
   overflow-y: auto;
 }
 
-.main-body {
-  flex: 1;
-  padding: 10px;
-}
 
 /* Friend list */
 .friend-card {
@@ -39,7 +31,7 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  height: 86vh;
   width: 65vw;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -105,7 +97,7 @@
   border-top: 1px solid #ccc;
 }
 
-input[type="text"] {
+.chat-input {
   flex: 1;
   padding: 5px 10px;
   border-radius: 20px;
@@ -134,3 +126,24 @@ input[type="text"] {
   object-fit: cover;
   vertical-align: middle;
 }
+
+
+.chat-list {
+  width: 200px;
+  background-color: rgb(250, 250, 250);
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-list a,
+.chat-list a:visited {
+  color: #333;
+  text-decoration: none;
+}
+
+.chat-list ul {
+  list-style-type: none;
+}
+

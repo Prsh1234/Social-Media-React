@@ -64,9 +64,8 @@ const Chat = ({ friend, user }) => {
         {messages.map((m) => (
           <div
             key={m.key}
-            className={`message ${
-              m.senderId === user.id ? "sent" : "received"
-            }`}
+            className={`message ${m.senderId === user.id ? "sent" : "received"
+              }`}
           >
             <b>
               <img
@@ -76,8 +75,8 @@ const Chat = ({ friend, user }) => {
                       ? `data:image/jpeg;base64,${user.profilePic}`
                       : "/assets/profile.jpg"
                     : friend.profilePic
-                    ? `data:image/jpeg;base64,${friend.profilePic}`
-                    : "/assets/profile.jpg"
+                      ? `data:image/jpeg;base64,${friend.profilePic}`
+                      : "/assets/profile.jpg"
                 }
                 alt="Profile"
                 className="chat-avatar"
@@ -94,6 +93,7 @@ const Chat = ({ friend, user }) => {
       <div className="input-area">
         <input
           type="text"
+          className="chat-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}

@@ -48,7 +48,7 @@ export const validateAuthToken = async (navigate) => {
 
 
   
-  export const authenticateAdmin = async () => {
+  export const authenticateAdmin = async (navigate) => {
     const token = localStorage.getItem("AUTH_TOKEN");
     if (!token) return false;
   
@@ -62,6 +62,7 @@ export const validateAuthToken = async (navigate) => {
       localStorage.removeItem("AUTH_TOKEN");
       localStorage.removeItem("userId");
       localStorage.removeItem("role");
+      navigate("/login");
       return false;
     }
   };

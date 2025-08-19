@@ -11,7 +11,7 @@ const AdminLayout = () => {
 
     useEffect(() => {
         const validate = async () => {
-            const valid = await authenticateAdmin();
+            const valid = await authenticateAdmin(navigate);
             if (!valid) {
                 navigate("/home");
             } else {

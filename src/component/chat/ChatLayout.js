@@ -46,19 +46,18 @@ const ChatLayout = () => {
   }, [fetchFriends, fetchUser]);
 
   return (
-    <div className="container">
-      <Header />
-      <div className="row main-wrapper">
+    <div className="home-container">
+      <div className="home-header">
+        <Header />
+      </div>
+      <div className="home-main-wrapper">
         <Sidebar />
-
-        {/* Friend list sidebar */}
-        <div className="col-3 sidebar">
+        <div className="chat-list">
           {friendList.map((friend) => (
             <div
               key={friend.id}
-              className={`friend-card ${
-                selectedFriend?.id === friend.id ? "active" : ""
-              }`}
+              className={`friend-card ${selectedFriend?.id === friend.id ? "active" : ""
+                }`}
               onClick={() => setSelectedFriend(friend)}
             >
               <img
@@ -74,14 +73,17 @@ const ChatLayout = () => {
             </div>
           ))}
         </div>
+        <div className="home-main-content">
+        
 
         {/* Chat area */}
-        <div className="col-9 main-body">
+        <div className="home-main-content">
           {selectedFriend ? (
             <Chat friend={selectedFriend} user={user} />
           ) : (
             <div>Select a friend to start chatting</div>
           )}
+        </div>
         </div>
       </div>
     </div>

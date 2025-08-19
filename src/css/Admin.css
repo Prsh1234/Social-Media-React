@@ -1,9 +1,9 @@
-.user {
+.admin-table {
     width: 100%;
 }
 
-.user th,
-.user td {
+.admin-table th,
+.admin-table td {
     padding: 12px 16px;
     /* Adjust padding as needed */
     text-align: left;
@@ -11,7 +11,7 @@
 
 }
 
-.user {
+.admin-table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'Segoe UI', sans-serif;
@@ -23,30 +23,30 @@
     /* For border-radius to work on table */
 }
 
-.user thead {
+.admin-table thead {
     background-color: #0077cc;
     color: white;
     text-align: left;
 }
 
-.user tbody tr:hover {
+.admin-table tbody tr:hover {
     background-color: #f1f9ff;
 }
 
-.user tbody tr:nth-child(even) {
+.admin-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
 
 
-.user-options {
+.admin-table-options {
     display: flex;
     flex-direction: row;
     margin-bottom: 17px;
 
 }
 
-.user-button {
+.admin-table-button {
     padding: 10px;
     margin-top: 16px;
     color: white;
@@ -61,12 +61,52 @@
 
 .delete-option {
     background: #ff0000;
+    margin-right:8px;
 }
 
 .edit-option {
     background: #00ff26;
+    margin-right:8px;
+
 }
 
 .view-option {
-    background: #2604ff;
+    background: #0077cc;
+    margin-right:8px;
+
+}
+/* Thumbnail size */
+.report-image {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.report-image:hover {
+    transform: scale(1.05);
+}
+
+/* Modal backdrop */
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Enlarged image */
+.modal-image {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }

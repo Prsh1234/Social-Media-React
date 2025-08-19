@@ -4,6 +4,8 @@ import { getAllUsers } from "../services/user";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+
 
     const fetchUsers = async () => {
 
@@ -12,10 +14,13 @@ const Users = () => {
 
         if (result.success) {
             setUsers(result.data);
+            setLoading(false);
+
         } else {
             console.error("Error loading users:", result.error);
 
         }
+        
     };
 
     useEffect(() => {
@@ -37,6 +42,7 @@ const Users = () => {
 
         };
     }
+    if (loading) return <p>Loading users...</p>;
     return (
         <div className="user-list">
             {users.map((user) => (

@@ -13,14 +13,16 @@ const HomeLayout = () => {
 
 
   return (
-    <div className="container">
-      <Header />
-      <div className="row main-wrapper">
+    <div className="home-container">
+      <div className="home-header">
+        <Header />
+      </div>
+      <div className="home-main-wrapper">
         <Sidebar />
-        <div className="col main-body main-content">
+        <div className="home-main-content">
           <Outlet />
         </div>
-        <div className="col main-body left-sidebar">
+        <div className="home-right-sidebar">
           <Users />
         </div>
       </div>

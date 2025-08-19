@@ -4,7 +4,7 @@ import CONFIG from "../config";
 
 export const doReport = async (postId,userId) => {
   try {
-    debugger;
+
 
     const res = await axios.post(`${CONFIG.API_URL}/post/report`, null, {
       headers: { Authorization: `Bearer ${localStorage.getItem("AUTH_TOKEN")}` },

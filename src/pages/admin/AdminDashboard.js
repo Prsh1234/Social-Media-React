@@ -4,12 +4,13 @@ import { deleteUser, getUsers } from "../../services/admin";
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
+    const fetchUsers = async () => {
+        const res = await getUsers();
+        setUsers(res.data);
+    };
+
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            const res = await getUsers();
-            setUsers(res.data);
-        };
         fetchUsers();
     }, []);
 
@@ -26,7 +27,7 @@ const AdminDashboard = () => {
     return (
         <div>
             <h2>Admin Dashboard</h2>
-            <table className="user">
+            <table className="admin-table">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -45,8 +46,8 @@ const AdminDashboard = () => {
                             <td>{u.firstName}</td>
                             <td>{u.lastName}</td>
                             <td>{u.role}</td>
-                            <td className="user-options">
-                                <button className="user-button delete-option" value={u.id} onClick={() => deleteSelectedUser(u.id)}>Delete</button>
+                            <td className="admin-table-options">
+                                <button className="admin-table-button delete-option" value={u.id} onClick={() => deleteSelectedUser(u.id)}>Delete</button>
                                 {/* Optional buttons if you want edit/view */}
                                 {/* 
                             <button
