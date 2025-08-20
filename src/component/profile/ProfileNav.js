@@ -3,6 +3,7 @@ import "../../css/Profile.css";
 
 const ProfileNav = () => {
   return (
+    
     <div className="profile-nav">
       <ul className="profile-nav-links">
         <li>

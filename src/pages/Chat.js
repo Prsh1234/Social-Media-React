@@ -44,63 +44,124 @@ const Chat = ({ friend, user }) => {
       fetchMessages();
     }
   };
+  const formatMessageTime = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
 
+  const formatMessageDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return "Yesterday";
+    } else {
+      return date.toLocaleDateString();
+    }
+  };
   return (
-    <div className="chat-container">
-      <h3 className="chat-header">
-        <img
-          src={
-            friend.profilePic
-              ? `data:image/jpeg;base64,${friend.profilePic}`
-              : "/assets/profile.jpg"
-          }
-          alt="Profile"
-          className="chat-avatar"
-        />
-        {friend.userName}
-      </h3>
-
-      <div className="messages">
-        {messages.map((m) => (
-          <div
-            key={m.key}
-            className={`message ${m.senderId === user.id ? "sent" : "received"
-              }`}
-          >
-            <b>
+    <div className="chat-area">
+      {/* Chat Header */}
+      <div className="chat-header">
+        <div className="chat-user-info">
+          <div className="chat-user-avatar-container">
+            <div className="chat-user-avatar">
               <img
                 src={
-                  m.senderId === user.id
-                    ? user.profilePic
-                      ? `data:image/jpeg;base64,${user.profilePic}`
-                      : "/assets/profile.jpg"
-                    : friend.profilePic
-                      ? `data:image/jpeg;base64,${friend.profilePic}`
-                      : "/assets/profile.jpg"
+                  friend.profilePic
+                    ? `data:image/jpeg;base64,${friend.profilePic}`
+                    : "/assets/profile.jpg"
                 }
                 alt="Profile"
                 className="chat-avatar"
               />
-              {m.senderId === user.id ? user.userName : friend.userName}
-            </b>{" "}
-            {m.content}
-            <div className="timestamp">{new Date(m.timestamp).toLocaleString()}</div>
+            </div>
+            <div className="chat-user-details">
+              {friend.userName}
+            </div>
           </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
 
-      <div className="input-area">
-        <input
-          type="text"
-          className="chat-input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-        />
-        <button className="send-button" onClick={sendMessage}>
-          Send
-        </button>
+        </div>
+      </div>
+      <div className="messages-container">
+        <div className="messages-list">
+          {messages.length === 0 ? (
+            <div className="empty-chat">
+              <p>No messages yet. Start the conversation!</p>
+            </div>
+          ) : (
+            messages.map((message, index) => {
+              const isFromUser = message.senderId === user.id;
+              const showDate = index === 0 ||
+                formatMessageDate(messages[index - 1].timestamp) !== formatMessageDate(message.timestamp);
+
+              return (
+                <div key={message.key}>
+                  {showDate && (
+                    <div className="date-separator">
+                      <span className="date-badge">
+                        {formatMessageDate(message.timestamp)}
+                      </span>
+                    </div>
+                  )}
+                  <div className={`message-group ${isFromUser ? 'sent' : 'received'}`}>
+                    <div className="message-content">
+                      {!isFromUser && (
+                        <div className="message-sender-avatar">
+                          <img
+                            src={
+                              message.senderId === user.id
+                                ? user.profilePic
+                                  ? `data:image/jpeg;base64,${user.profilePic}`
+                                  : "/assets/profile.jpg"
+                                : friend.profilePic
+                                  ? `data:image/jpeg;base64,${friend.profilePic}`
+                                  : "/assets/profile.jpg"
+                            }
+                            alt="Profile"
+                            className="chat-avatar"
+                          />
+                        </div>
+                      )}
+                      <div className={`message-bubble ${isFromUser ? 'sent' : 'received'}`}>
+                        <p className="message-text">{message.content}</p>
+                        <p className="message-time">
+                          {formatMessageTime(message.timestamp)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+      </div>
+      <div className="chat-input-area">
+        <div className="input-container">
+          <div className="input-wrapper">
+            <input
+              className="chat-input"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              placeholder={`Message ${friend.userName}...`}
+              disabled={!friend}
+            />
+          </div>
+          <button
+            className="send-button"
+            onClick={sendMessage}
+            disabled={!input.trim() || !friend}
+          >
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );

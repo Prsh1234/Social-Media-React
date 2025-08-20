@@ -25,7 +25,9 @@ const ProfileLayout = () => {
         <Sidebar />
         <div className="home-main-content">
           <ProfileHeader />
-          <ProfileNav />
+          <div className="profile-nav-container">
+            <ProfileNav />
+          </div>
           <Outlet />
         </div>
 

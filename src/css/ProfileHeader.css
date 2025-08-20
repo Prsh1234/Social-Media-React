@@ -1,8 +1,7 @@
 .profile-header {
     width: 100%;
     position: relative;
-    font-family: Arial, sans-serif;
-    margin-bottom: 4rem;
+    font-family: Arial, sans-serif;    
   }
   .profile-header-wrapper {
     padding-bottom: 80px;
@@ -98,10 +97,77 @@
     display: none;
   }
   
-  .username {
+  .profile-name-actions{
+    display: flex;
+    align-items: center;    /* vertically center */
+    justify-content: center; /* horizontally center overall, optional */
+    gap: 20px;              /* space between username and buttons */
+    margin-top: 20px;
+    font-size: 24px;
+  }
+
+    
+  .profile-username {
     font-size: 24px;
     font-weight: bold;
     color: #000;
-    margin-bottom: 20px;
+    padding-right:32px ;
+
+  }
+  
+  .friend-actions {
+    align-items: center;
+  }
+
+  .friend-action {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Base button styling */
+  .friend-action .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.15s ease;
+  }
+  
+  .friend-action .btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .friend-action .btn:active {
+    transform: translateY(0);
+  }
+  
+  /* Variants */
+  .friend-action .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .friend-action .btn-primary:hover {
+    background-color: #0069d9;
+  }
+  
+  .friend-action .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .friend-action .btn-danger:hover {
+    background-color: #c82333;
+  }
+  
+  .friend-action .btn-success {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .friend-action .btn-success:hover {
+    background-color: #218838;
   }
   

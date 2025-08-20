@@ -40,7 +40,7 @@ const CreatePost = ({ onPostSuccess }) => {
       setImage(null);
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
-      if (onPostSuccess) onPostSuccess();
+      if (onPostSuccess) onPostSuccess(result.data);
     } else {
       console.error("Error posting:", "Failed to create post");
       alert("Failed to create post. Please try again.");

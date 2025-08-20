@@ -121,7 +121,7 @@ const Header = () => {
                                                     alt="profile"
                                                 />
                                             </div>
-                                            <span className="username">{user.userName}</span>
+                                            <span className="search-username">{user.userName}</span>
                                         </li>
                                     ))}
                                 </ul>

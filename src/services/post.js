@@ -29,11 +29,13 @@ export const doPost = async (post, isFormData = false) => {
 
 export const doGetUserPosts = async (userId, page = 0, size = 5 ) => {
   const posterId = userId;
+  console.log("posterId", posterId);
   try {
     const res = await axios.get(`${CONFIG.API_URL}/post/byuser`, {
       headers: { Authorization: `Bearer ${token}` },
-      params: { posterId: posterId,userId, page, size }, // <-- send posterId as query param
+      params: { posterId: posterId, page, size }, // <-- send posterId as query param
     });
+    console.log(res.data);
     return { success: true, data: res.data };
   } catch (error) {
     const message =

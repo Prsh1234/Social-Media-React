@@ -26,7 +26,9 @@ const FriendLayout = () => {
         <Sidebar />
         <div className="home-main-content">
           <FriendHeader />
-          <FriendNav />
+          <div className="profile-nav-container">
+            <FriendNav />
+          </div>
           <Outlet />
         </div>
 

@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { useParams } from "react-router";
-import { NavLink } from "react-router";
+import { useParams,NavLink } from "react-router";
 import "../../css/Post.css";
 import { doGetComments, doPostComment } from "../../services/comment";
 import { doGetUserPosts, toggleLike } from "../../services/post";
@@ -8,7 +7,7 @@ import { doReport } from "../../services/report";
 
 const FriendTimeline = () => {
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const [comments, setComments] = useState({});
@@ -16,57 +15,50 @@ const FriendTimeline = () => {
     const [visiblePosts, setVisiblePosts] = useState({});
     const [postStates, setPostStates] = useState({});
     const { friendId } = useParams();
-    const observer = useRef();
     const userId = localStorage.getItem("userId");
 
-
-    
     const fetchPosts = useCallback(async (reset = false) => {
+      console.log("fetch")
+      debugger;
+      if (loading) return;
       setLoading(true);
       const currentPage = reset ? 0 : page;
       const result = await doGetUserPosts(friendId, currentPage, 5);
   
       if (result.success) {
-        if (reset) {
-          setPosts(result.data);
-          setPage(1);
-          setHasMore(true);
-        } else {
-          if (result.data.length > 0) {
-            setPosts((prev) => [...prev, ...result.data]);
-            setPage((prev) => prev + 1);
-          }
-        }
+        setPosts(prev => reset ? result.data : [...prev, ...result.data]);
+        setHasMore(result.data.length > 0);
+        setPage(prev => reset ? 1 : prev + 1);
       } else {
         console.error("Error loading posts:", result.error);
       }
       setLoading(false);
-    }, [page, friendId]);
+    }, [loading, page, friendId]);
+
+    useEffect(() => {
+      const states = posts.reduce((acc, p) => {
+        acc[p.id] = { liked: p.liked, likeCount: p.likeCount };
+        return acc;
+      }, {});
+      setPostStates(states);
+    }, [posts]);
 
     useEffect(() => {
       fetchPosts(true);
-    }, [fetchPosts]);
+    }, []);
+
     useEffect(() => {
-      setPostStates(
-        posts.reduce((acc, p) => {
-          acc[p.id] = { liked: p.liked, likeCount: p.likeCount };
-          return acc;
-        }, {})
-      );
-    }, [posts]);
-    const lastPostRef = useCallback(
-      (node) => {
-        if (loading) return;
-        if (observer.current) observer.current.disconnect();
-        observer.current = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting && hasMore) {
-            fetchPosts(); // <-- fetchPosts is used here
-          }
-        });
-        if (node) observer.current.observe(node);
-      },
-      [loading, hasMore, fetchPosts] // added fetchPosts here
-    );
+      const handleScroll = () => {
+        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+        if (scrollTop + clientHeight >= scrollHeight * 0.9 && hasMore && !loading) {
+          fetchPosts();
+        }
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, [hasMore, loading, fetchPosts]);
+
     const handleReport = async (postId) => {
       try {
         const res = await doReport(postId, userId);
@@ -127,14 +119,8 @@ const FriendTimeline = () => {
     return (
     <div>
       <div className="post-container">
-        {posts.map((post, index) => (
-          <div
-            key={post.id}
-            className="post-card"
-            ref={index === posts.length - 1 ? lastPostRef : null}
-          >
-
-
+        {posts.map(post => (
+          <div key={post.id} className="post-card">
             <div className="profile-pic">
               <img
                 src={

@@ -1,7 +1,4 @@
-html, body {
-  height: 100%;
-  margin: 0;
-}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -11,7 +8,7 @@ html, body {
 .main-wrapper {
   display: flex;
   flex: 1;
-  height: 100%;
+  height: 100vh;
   gap: 20px; /* optional spacing between columns */
 }
 
@@ -19,7 +16,6 @@ html, body {
 .main-body {
   flex: 1;
   padding: 20px;
-  height: 100%
 }
 
 .main-content {

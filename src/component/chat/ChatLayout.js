@@ -46,44 +46,89 @@ const ChatLayout = () => {
   }, [fetchFriends, fetchUser]);
 
   return (
+
+
+
+
     <div className="home-container">
       <div className="home-header">
         <Header />
       </div>
       <div className="home-main-wrapper">
-        <Sidebar />
-        <div className="chat-list">
-          {friendList.map((friend) => (
-            <div
-              key={friend.id}
-              className={`friend-card ${selectedFriend?.id === friend.id ? "active" : ""
-                }`}
-              onClick={() => setSelectedFriend(friend)}
-            >
-              <img
-                src={
-                  friend.profilePic
-                    ? `data:image/jpeg;base64,${friend.profilePic}`
-                    : "/assets/profile.jpg"
-                }
-                alt="Profile"
-                className="chat-avatar"
-              />
-              <div>{friend.userName}</div>
-            </div>
-          ))}
-        </div>
-        <div className="home-main-content">
-        
 
-        {/* Chat area */}
-        <div className="home-main-content">
-          {selectedFriend ? (
-            <Chat friend={selectedFriend} user={user} />
-          ) : (
-            <div>Select a friend to start chatting</div>
-          )}
-        </div>
+        <Sidebar />
+        <div className="chat-layout">
+          <div className="chat-sidebar">
+          <div className="sidebar-header">
+              <div className="user-info">
+                <div className="user-avatar">
+                  <img
+                    src={
+                      user.profilePic
+                        ? `data:image/jpeg;base64,${user.profilePic}`
+                        : "/assets/profile.jpg"
+                    }
+                    alt="Profile"
+                    className="chat-avatar"
+
+                  />
+                </div>
+                <div className="user-details">
+                  <h1>{user.userName}</h1>
+                </div>
+              </div>
+            </div>
+            <div className="friends-list">
+              {friendList.map((friend) => (
+                <div
+                  key={friend.id}
+                  className={`friend-card ${selectedFriend?.id === friend.id ? "active" : ""}`}
+                  onClick={() => setSelectedFriend(friend)}
+                >
+                  <div className="friend-info">
+                    <div className="friend-avatar-container">
+                      <div className="friend-avatar">
+                        <img
+                          src={
+                            friend.profilePic
+                              ? `data:image/jpeg;base64,${friend.profilePic}`
+                              : "/assets/profile.jpg"
+                          }
+                          alt="Profile"
+                          className="chat-avatar"
+
+                        />
+                      </div>
+                      <div className="friend-details">
+                        <div className="friend-header">
+                          <h3 className="friend-name">{friend.userName}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Chat area */}
+          <div className="chat-area">
+            {selectedFriend ? (
+              <Chat friend={selectedFriend} user={user} />
+            ) : (
+              <div className="welcome-screen">
+                <div className="welcome-content">
+                  <div className="welcome-icon">
+                    <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <h2>Welcome to Chat</h2>
+                  <p>Select a friend to start chatting</p>
+                </div>
+              </div>
+            )}
+
+          </div>
         </div>
       </div>
     </div>

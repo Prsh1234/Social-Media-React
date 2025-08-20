@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { NavLink } from "react-router";
 import "../../css/Post.css";
 import { doGetComments, doPostComment } from "../../services/comment";
@@ -7,7 +7,7 @@ import { doReport } from "../../services/report";
 
 const Timeline = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [comments, setComments] = useState({});
@@ -16,61 +16,55 @@ const Timeline = () => {
   const [postStates, setPostStates] = useState({});
   const userId = localStorage.getItem("userId");
 
-  const observer = useRef();
-
- 
-
   const fetchPosts = useCallback(async (reset = false) => {
+    if (loading) return;
     setLoading(true);
+
     const currentPage = reset ? 0 : page;
     const result = await doGetUserPosts(userId, currentPage, 5);
 
     if (result.success) {
-      if (reset) {
-        setPosts(result.data);
-        setPage(1);
-        setHasMore(true);
-      } else {
-        if (result.data.length > 0) {
-          setPosts((prev) => [...prev, ...result.data]);
-          setPage((prev) => prev + 1);
-        }
-      }
+      setPosts(prev => reset ? result.data : [...prev, ...result.data]);
+      setHasMore(result.data.length > 0);
+      setPage(prev => reset ? 1 : prev + 1);
     } else {
       console.error("Error loading posts:", result.error);
     }
-    setLoading(false);
-  }, [page, userId]);
 
+    setLoading(false);
+  }, [loading, page, userId]);
+
+  // Initialize postStates when posts change
+  useEffect(() => {
+    const states = posts.reduce((acc, p) => {
+      acc[p.id] = { liked: p.liked, likeCount: p.likeCount };
+      return acc;
+    }, {});
+    setPostStates(states);
+  }, [posts]);
+
+  // Initial fetch
   useEffect(() => {
     fetchPosts(true);
-  }, [fetchPosts]);
+  }, []);
 
+  // Scroll handler for infinite loading
   useEffect(() => {
-    setPostStates(
-      posts.reduce((acc, p) => {
-        acc[p.id] = { liked: p.liked, likeCount: p.likeCount };
-        return acc;
-      }, {})
-    );
-  }, [posts]);
-  const lastPostRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          fetchPosts(); // <-- fetchPosts is used here
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore, fetchPosts] // added fetchPosts here
-  );
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight * 0.9 && hasMore && !loading) {
+        fetchPosts();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasMore, loading, fetchPosts]);
+
   const handleDelete = async (postId) => {
     const result = await deletePost(postId);
     if (result.success) {
-      setPosts((prev) => prev.filter((p) => p.id !== postId));
+      setPosts(prev => prev.filter(p => p.id !== postId));
     }
   };
 
@@ -78,7 +72,7 @@ const Timeline = () => {
     try {
       const res = await doReport(postId, userId);
       if (res.data.success) {
-        setPosts((prev) => prev.filter((p) => p.id !== postId));
+        setPosts(prev => prev.filter(p => p.id !== postId));
       } else {
         alert("Failed to report post: " + res.data.message);
       }
@@ -91,12 +85,9 @@ const Timeline = () => {
   const handleLike = async (postId) => {
     const result = await toggleLike(postId, userId);
     if (result.success) {
-      setPostStates((prev) => ({
+      setPostStates(prev => ({
         ...prev,
-        [postId]: {
-          liked: result.data.liked,
-          likeCount: result.data.likeCount,
-        },
+        [postId]: { liked: result.data.liked, likeCount: result.data.likeCount }
       }));
     }
   };
@@ -105,14 +96,14 @@ const Timeline = () => {
     if (!visiblePosts[postId]) {
       const result = await doGetComments(postId);
       if (result.success) {
-        setComments((prev) => ({ ...prev, [postId]: result.data }));
+        setComments(prev => ({ ...prev, [postId]: result.data }));
       }
     }
-    setVisiblePosts((prev) => ({ ...prev, [postId]: !prev[postId] }));
+    setVisiblePosts(prev => ({ ...prev, [postId]: !prev[postId] }));
   };
 
   const handleChange = (postId, value) => {
-    setCommentInputs((prev) => ({ ...prev, [postId]: value }));
+    setCommentInputs(prev => ({ ...prev, [postId]: value }));
   };
 
   const handleSubmit = async (postId) => {
@@ -121,11 +112,11 @@ const Timeline = () => {
 
     const result = await doPostComment(postId, text);
     if (result.success) {
-      const result = await doGetComments(postId);
-      if (result.success) {
-        setComments((prev) => ({ ...prev, [postId]: result.data }));
+      const commentsResult = await doGetComments(postId);
+      if (commentsResult.success) {
+        setComments(prev => ({ ...prev, [postId]: commentsResult.data }));
       }
-      setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
+      setCommentInputs(prev => ({ ...prev, [postId]: "" }));
     } else {
       console.error("Failed to post comment:", result.error);
     }
@@ -134,72 +125,38 @@ const Timeline = () => {
   return (
     <div>
       <div className="post-container">
-        {posts.map((post, index) => (
-          <div
-            key={post.id}
-            className="post-card"
-            ref={index === posts.length - 1 ? lastPostRef : null}
-          >
-
-
+        {posts.map(post => (
+          <div key={post.id} className="post-card">
             <div className="profile-pic">
               <img
-                src={
-                  post.profilePic
-                    ? `data:image/jpeg;base64,${post.profilePic}`
-                    : "/assets/profile.jpg"
-                }
+                src={post.profilePic ? `data:image/jpeg;base64,${post.profilePic}` : "/assets/profile.jpg"}
                 alt="Profile Pic"
               />
             </div>
 
             <div className="post-data-area">
               <h4>
-                <NavLink
-                  to={
-                    post.posterId === parseInt(userId)
-                      ? "/profile/info"
-                      : `/friend/info/${post.posterId}`
-                  }
-                >
+                <NavLink to={post.posterId === parseInt(userId) ? "/profile/info" : `/friend/info/${post.posterId}`}>
                   {post.userName}
                 </NavLink>
-                <div className="timestamp">
-                  {new Date(post.timestamp).toLocaleString()}
-                </div>
+                <div className="timestamp">{new Date(post.timestamp).toLocaleString()}</div>
               </h4>
 
               <p>{post.content}</p>
 
               {post.imageBase64 && (
                 <div className="post-image">
-                  <img
-                    src={`data:image/jpeg;base64,${post.imageBase64}`}
-                    alt="Post"
-                  />
+                  <img src={`data:image/jpeg;base64,${post.imageBase64}`} alt="Post" />
                 </div>
               )}
 
               <div className="post-actions">
-                <button
-                  onClick={() => handleLike(post.id)}
-                  className={postStates[post.id]?.liked ? "liked" : ""}
-                >
+                <button onClick={() => handleLike(post.id)} className={postStates[post.id]?.liked ? "liked" : ""}>
                   {postStates[post.id]?.liked ? "💙 Unlike" : "🤍 Like"}
                 </button>
                 <span>{postStates[post.id]?.likeCount || 0} likes</span>
-                <button
-                  onClick={() => handleReport(post.id)}
-                  className="report-btn"
-                >
-                  🚨 Report
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(post.id)}
-                >
-                  🗑️ Delete
-                </button>
+                <button onClick={() => handleReport(post.id)} className="report-btn">🚨 Report</button>
+                <button className="delete-btn" onClick={() => handleDelete(post.id)}>🗑️ Delete</button>
                 <button onClick={() => handleToggleComments(post.id)}>
                   {visiblePosts[post.id] ? "💬 Hide Comments" : "💬 Show Comments"}
                 </button>
@@ -208,27 +165,14 @@ const Timeline = () => {
               {visiblePosts[post.id] && (
                 <div className="comments-section">
                   <div className="comments-list">
-                    {(comments[post.id] || []).map((c) => (
+                    {(comments[post.id] || []).map(c => (
                       <div key={c.id} className="comment">
                         <div className="comment-avatar">
-                          <img
-                            src={
-                              c.profilePic
-                                ? `data:image/jpeg;base64,${c.profilePic}`
-                                : "/assets/profile.jpg"
-                            }
-                            alt="Profile Pic"
-                          />
+                          <img src={c.profilePic ? `data:image/jpeg;base64,${c.profilePic}` : "/assets/profile.jpg"} alt="Profile Pic"/>
                         </div>
                         <div className="comment-content">
                           <strong>
-                            <NavLink
-                              to={
-                                c.userId === parseInt(userId)
-                                  ? "/profile/info"
-                                  : `/friend/info/${c.userId}`
-                              }
-                            >
+                            <NavLink to={c.userId === parseInt(userId) ? "/profile/info" : `/friend/info/${c.userId}`}>
                               {c.userName}:
                             </NavLink>
                           </strong>

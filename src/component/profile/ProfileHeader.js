@@ -95,7 +95,7 @@ const ProfileHeader = () => {
             />
           </label>
         </div>
-        <h2 className="username">{username}</h2>
+        <h2 className="profile-username">{username}</h2>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 .sidebar {
-  width: 260px;
+  width: 280px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 0;
@@ -8,6 +8,9 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 0 8px 8px 0;
   overflow: hidden;
+  padding: 10px;
+  
+  overflow-y: auto;
 
 }
 
@@ -15,7 +18,7 @@
   padding: 20px 0;
   height: 100%;
   position: fixed;
-  width: 250px;;
+  width: 250px;
 }
 
 .sidebar-menu {

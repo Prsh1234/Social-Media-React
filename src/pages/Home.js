@@ -5,60 +5,59 @@ import { doGetTimelinePosts } from "../services/post";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
-  const fetchPosts = useCallback(
-    async (reset = false) => {
-      setLoading(true);
-      const result = await doGetTimelinePosts(reset ? 0 : page, 5);
+  const fetchPosts = useCallback(async (reset = false) => {
+    if (loading) return;
+
+    setLoading(true);
+    const currentPage = reset ? 0 : page;
+
+    try {
+      const result = await doGetTimelinePosts(currentPage, 5);
 
       if (result.success) {
-        if (reset) {
-          setPosts(result.data);
-          setPage(1);
-          setHasMore(true); // always re-enable when resetting
-        } else {
-          if (result.data.length > 0) {
-            setPosts((prev) => [...prev, ...result.data]);
-            setPage((prev) => prev + 1);
-          }
-          // keep hasMore = true → wait for future posts
-        }
+        setPosts(prev => reset ? result.data : [...prev, ...result.data]);
+        setHasMore(result.data.length > 0);
+        setPage(prev => reset ? 1 : prev + 1); // increment page for next fetch
       } else {
         console.error("Error loading posts:", result.error);
       }
-      setLoading(false);
-    },
-    [page] // ✅ depends on page
-  );
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
 
-  const handlePostRemoved = (postId) => {
-    setPosts((prev) => prev.filter((p) => p.id !== postId));
-  };
+    setLoading(false);
+  }, [loading, page]);
 
+  const handlePostSuccess = newPost => setPosts(prev => [newPost, ...prev]);
+  const handlePostRemoved = postId => setPosts(prev => prev.filter(p => p.id !== postId));
+
+  // initial fetch
   useEffect(() => {
-    fetchPosts(true); // load first page
-  }, [fetchPosts]);
+    fetchPosts(true);
+  }, []); // run only once
 
+  // scroll for more
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight * 0.9 && !loading && hasMore) {
+      if (scrollTop + clientHeight >= scrollHeight * 0.9 && hasMore && !loading) {
         fetchPosts();
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMore, fetchPosts]);
+  }, [hasMore, loading, fetchPosts]);
 
   return (
     <div>
-      <CreatePost onPostSuccess={() => fetchPosts(true)} />
+      <CreatePost onPostSuccess={handlePostSuccess} />
       <Post posts={posts} onRemove={handlePostRemoved} />
-      {loading && <p>Loading...</p>}
+      {loading && <div className="loader"><p>Loading...</p></div>}
     </div>
   );
 };
