@@ -8,11 +8,14 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 0 8px 8px 0;
   overflow: hidden;
+
 }
 
 .sidebar-nav {
   padding: 20px 0;
   height: 100%;
+  position: fixed;
+  width: 250px;;
 }
 
 .sidebar-menu {

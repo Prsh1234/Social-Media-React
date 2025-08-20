@@ -16,15 +16,15 @@ const ProfileLayout = () => {
   }, [navigate]);
 
   return (
-    <div className="container">
-      <div className="row profile-header-wrapper">
-        <Header />
-        <ProfileHeader />
-      </div>
-      <div className="row main-wrapper">
-        <Sidebar />
 
-        <div className="col main-body main-content">
+    <div className="home-container">
+      <div className="home-header">
+        <Header />
+      </div>
+      <div className="home-main-wrapper">
+        <Sidebar />
+        <div className="home-main-content">
+          <ProfileHeader />
           <ProfileNav />
           <Outlet />
         </div>

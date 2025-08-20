@@ -30,6 +30,7 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 
@@ -42,10 +43,11 @@ html, body {
 }
 
 .home-main-wrapper {
+  margin-top: 72px; /* keep header offset */
   display: flex;
-  flex: 1;
-  height: calc(100vh - 72px);
-  overflow: hidden;
+  flex: 1 1 auto;   /* allow wrapper to grow/shrink */
+  min-height: calc(100vh - 72px); /* optional: ensure at least full viewport */
+  overflow: auto;   
 }
 
 .home-main-content {
