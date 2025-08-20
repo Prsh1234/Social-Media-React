@@ -31,13 +31,13 @@ const Reports = () => {
     };
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
         });
-      };
+    };
 
 
     return (
@@ -111,14 +111,14 @@ const Reports = () => {
                             </tbody>
                         </table>
                     )}
-                    
-                </div>
-            </div>
-            {selectedImage && (
+                    {selectedImage && (
                         <div className="image-modal" onClick={() => setSelectedImage(null)}>
                             <img src={selectedImage} alt="Full Size" className="modal-image" />
                         </div>
                     )}
+
+                </div>
+            </div>
         </div>
     );
 };

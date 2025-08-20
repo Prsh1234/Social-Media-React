@@ -85,7 +85,14 @@
   }
 }
 
-
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px; /* so it's visible */
+  font-size: 1.2rem;
+  color: #555;
+}
 
 
 

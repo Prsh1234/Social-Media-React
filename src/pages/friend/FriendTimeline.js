@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams,NavLink } from "react-router";
 import "../../css/Post.css";
 import { doGetComments, doPostComment } from "../../services/comment";
@@ -19,14 +19,18 @@ const FriendTimeline = () => {
 
     const fetchPosts = useCallback(async (reset = false) => {
       console.log("fetch")
-      debugger;
       if (loading) return;
       setLoading(true);
       const currentPage = reset ? 0 : page;
       const result = await doGetUserPosts(friendId, currentPage, 5);
   
       if (result.success) {
-        setPosts(prev => reset ? result.data : [...prev, ...result.data]);
+        setPosts(prev => {
+          const newPosts = result.data.filter(
+            post => !prev.some(existing => existing.id === post.id)
+          );
+          return reset ? result.data : [...prev, ...newPosts];
+        });
         setHasMore(result.data.length > 0);
         setPage(prev => reset ? 1 : prev + 1);
       } else {

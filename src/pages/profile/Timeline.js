@@ -24,7 +24,12 @@ const Timeline = () => {
     const result = await doGetUserPosts(userId, currentPage, 5);
 
     if (result.success) {
-      setPosts(prev => reset ? result.data : [...prev, ...result.data]);
+      setPosts(prev => {
+        const newPosts = result.data.filter(
+          post => !prev.some(existing => existing.id === post.id)
+        );
+        return reset ? result.data : [...prev, ...newPosts];
+      });
       setHasMore(result.data.length > 0);
       setPage(prev => reset ? 1 : prev + 1);
     } else {
