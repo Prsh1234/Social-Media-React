@@ -1,9 +1,10 @@
 import axios from "axios";
 import CONFIG from "../config";
 
-const token = localStorage.getItem("AUTH_TOKEN"); // get JWT from localStorage
 
 export const doGetChats = async (userId, friendId) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const res = await axios.get(`${CONFIG.API_URL}/chat/get/${userId}/${friendId}`, {
       headers: { Authorization: `Bearer ${token}` } // add JWT header
@@ -20,6 +21,8 @@ export const doGetChats = async (userId, friendId) => {
 };
 
 export const doSendMessage = async (senderId, receiverId, content) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const message = { senderId, receiverId, content };
     await axios.post(`${CONFIG.API_URL}/chat/send`, message, {

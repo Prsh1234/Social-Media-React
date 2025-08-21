@@ -1,6 +1,5 @@
 import axios from "axios";
 import CONFIG from "../config";
-const token = localStorage.getItem("AUTH_TOKEN");
 export const doPost = async (post, isFormData = false) => {
   const token = localStorage.getItem("AUTH_TOKEN");
 
@@ -29,6 +28,8 @@ export const doPost = async (post, isFormData = false) => {
 
 export const doGetUserPosts = async (userId, page = 0, size = 5 ) => {
   const posterId = userId;
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   console.log("posterId", posterId);
   try {
     const res = await axios.get(`${CONFIG.API_URL}/post/byuser`, {
@@ -49,6 +50,8 @@ export const doGetUserPosts = async (userId, page = 0, size = 5 ) => {
 
 export const doGetTimelinePosts = async (page = 0, size = 5) => {
   try {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     const userId = localStorage.getItem("userId");
     const res = await axios.get(
       `${CONFIG.API_URL}/post/timelineposts`,
@@ -68,6 +71,8 @@ export const doGetTimelinePosts = async (page = 0, size = 5) => {
 };
 
 export const deletePost = async (postId) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const userId = localStorage.getItem("userId");
     const res = await axios.delete(`${CONFIG.API_URL}/post/deletepost?postId=${postId}&userId=${userId}`,
@@ -87,6 +92,8 @@ export const deletePost = async (postId) => {
 
 
 export const toggleLike = async (postId, userId) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const res = await axios.post(`${CONFIG.API_URL}/post/like`, null, {
       headers: { Authorization: `Bearer ${token}` },

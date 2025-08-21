@@ -2,7 +2,6 @@ import axios from "axios";
 import CONFIG from "../config";
 
 
-const token = localStorage.getItem("AUTH_TOKEN");
 
 export const registerUser = async (newUser) => {
   try {
@@ -24,6 +23,8 @@ export const registerUser = async (newUser) => {
 
 export const getAllUsers = async () => {
   try {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     const userId = localStorage.getItem("userId");
     const response = await axios.get(`${CONFIG.API_URL}/user/allusers?currentUserId=${userId}`,
     {
@@ -43,6 +44,7 @@ export const getAllUsers = async () => {
 };
 
 export const getUserData = async (userId) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
   try {
     console.log(userId);
     const response = await axios.get(`${CONFIG.API_URL}/user/userdata?currentUserId=${userId}`,

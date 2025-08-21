@@ -1,9 +1,10 @@
 import axios from "axios";
 import CONFIG from "../config";
 
-const token = localStorage.getItem("AUTH_TOKEN"); // get token once
 
 export const doGetComments = async (postId) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const res = await axios.get(`${CONFIG.API_URL}/comment/getcomment`, {
       params: { postId },
@@ -16,6 +17,8 @@ export const doGetComments = async (postId) => {
 };
 
 export const doPostComment = async (postId, text) => {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
   try {
     const userId = localStorage.getItem("userId");
     const res = await axios.post(

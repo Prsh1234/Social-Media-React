@@ -1,9 +1,10 @@
 import axios from "axios";
 import CONFIG from "../config";
 
-const token = localStorage.getItem("AUTH_TOKEN"); // get token once
 
 export const sendFriendRequest = async (receiverId) => {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     try {
         const senderId = localStorage.getItem("userId");
         const response = await axios.post(
@@ -18,6 +19,8 @@ export const sendFriendRequest = async (receiverId) => {
 };
 
 export const GetFriendRequests = async (userId) => {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     try {
         const response = await axios.get(`${CONFIG.API_URL}/friend/getrequests`, {
             params: { userId },
@@ -31,6 +34,8 @@ export const GetFriendRequests = async (userId) => {
 };
 
 export const acceptFriendRequest = async (requestId) => {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     try {
         const response = await axios.post(
             `${CONFIG.API_URL}/friend/acceptrequest?requestId=${requestId}`,
@@ -45,6 +50,8 @@ export const acceptFriendRequest = async (requestId) => {
 };
 
 export const rejectFriendRequest = async (requestId) => {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     try {
         const response = await axios.post(
             `${CONFIG.API_URL}/friend/rejectrequest?requestId=${requestId}`,
@@ -59,6 +66,8 @@ export const rejectFriendRequest = async (requestId) => {
 };
 
 export const getFriends = async (userId) => {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     try {
         const response = await axios.get(`${CONFIG.API_URL}/friend/getfriends`, {
             params: { userId },
@@ -72,6 +81,8 @@ export const getFriends = async (userId) => {
 };
 
 export const unfriend = async (friendId) => {
+    const token = localStorage.getItem("AUTH_TOKEN");
+
     try {
         const userId = localStorage.getItem("userId");
         const response = await axios.post(
