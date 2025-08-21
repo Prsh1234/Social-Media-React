@@ -1,24 +1,52 @@
 .sidebar {
+  position: fixed;
+  top: 72;              /* below header */
+  left: 0;
   width: 280px;
+  height: calc(100vh - 72px);  
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 0;
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 0 8px 8px 0;
+  padding: 10px 0;
   overflow: hidden;
-  padding: 10px;
-  
-  overflow-y: auto;
-
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  border-radius: 0 8px 8px 0;
+  z-index: 1;
+}
+.sidebar-users {
+  position: fixed;
+  top: 72;              /* below header */
+  width: 280px;
+  right:0;
+  height: calc(100vh - 72px);  
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  overflow: hidden;
+  z-index: 1;
 }
 
+/* Scrollable menu inside sidebar */
 .sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   padding: 20px 0;
-  height: 100%;
-  position: fixed;
-  width: 250px;
+}
+/* Optional: smooth scrolling */
+.sidebar-nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .sidebar-menu {

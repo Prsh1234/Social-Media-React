@@ -1,0 +1,105 @@
+.users-carousel {
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 750px;
+    border-radius: 50%;
+  }
+  
+  .user-card {
+    text-align: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 16px;
+    /* padding: 16px; */
+  }
+  
+  .user-card .profile-pic {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 0.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .user-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .user-card button {
+    margin-top: 0.5rem;
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  
+  .user-card button:hover {
+    background: #764ba2;
+  }
+  
+  .slick-slide {
+    padding: 0 26px;
+    box-sizing: border-box;   /* 10px gap on left & right */
+  }
+  
+  .slick-list {
+    margin: 0 -26px;  /* pull back so first/last slide align nicely */
+  }
+
+  /* Put arrows outside */
+  .custom-prev,
+  .custom-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .custom-prev {
+    left: -55px;   /* adjust outside */
+    background: #667eea;
+  }
+  
+  .custom-next {
+    right: -55px;
+    background: #764ba2;
+  }
+  .slick-prev,
+.slick-next {
+  opacity: 1 !important;      /* always visible */
+  display: flex !important;    /* keep button visible */
+  z-index: 2;                  /* ensure above slides */
+}
+
+  
+  .slick-prev:before,
+.slick-next:before {
+  content: none;  /* remove default arrows */
+}
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus {
+  color: white !important;           
+  outline: none !important;       
+}
+
+
+.users-carousel .user-card a,
+.users-carousel .user-card a:visited {
+  color: inherit;        /* keep text color same */
+  text-decoration: none; /* remove underline */
+}

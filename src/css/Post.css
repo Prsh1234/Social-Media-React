@@ -4,7 +4,6 @@
   align-items: center;
   gap: 2rem;
   padding: 2rem;
-  min-height: 100vh;
 }
 
 .post-card {
@@ -137,7 +136,6 @@
 }
 
 .post-actions button {
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
   border: 1px solid rgba(226, 232, 240, 0.8);
   padding: 0.5rem 1rem;
   border-radius: 20px;

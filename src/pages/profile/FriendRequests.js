@@ -60,40 +60,43 @@ const FriendRequests = () => {
 
                 </ul>
             </div>
-            <div className="request-list">
-                {requestList.map((request) => (
-                    <div key={request.requestId} className="request-list-card">
-                        <div className="profile-pic">
-                            <img
-                                src={
-                                    request.profilePic
-                                        ? `data:image/jpeg;base64,${request.profilePic}`
-                                        : "/assets/profile.jpg"
-                                }
-                                alt={"Profile Pic"}
+            <div className="profile-friends-container">
 
-                            />                    </div>
-                        <div className="user-list-name-area">
-                            <h4>{request.userName}</h4>
-                            <h8>{request.mutual} mutual Friend</h8>
+                <div className="request-list">
+                    {requestList.map((request) => (
+                        <div key={request.requestId} className="request-list-card">
+                            <div className="profile-pic-friends">
+                                <img
+                                    src={
+                                        request.profilePic
+                                            ? `data:image/jpeg;base64,${request.profilePic}`
+                                            : "/assets/profile.jpg"
+                                    }
+                                    alt={"Profile Pic"}
 
+                                />                    </div>
+                            <div className="user-list-name-area">
+                                <h4>{request.userName}</h4>
+                                <div className="mutual-friends-text">{request.mutual} mutual Friends</div>
+
+                            </div>
+                            <div className="request-options">
+                                <button
+                                    className="requests-btn accept"
+                                    onClick={() => handleAccept(request.requestId)}
+                                >
+                                    Accept
+                                </button>
+                                <button
+                                    className="requests-btn reject"
+                                    onClick={() => handleReject(request.requestId)}
+                                >
+                                    Reject
+                                </button>
+                            </div>
                         </div>
-                        <div className="request-options">
-                            <button
-                                className="requests-btn accept"
-                                onClick={() => handleAccept(request.requestId)}
-                            >
-                                Accept
-                            </button>
-                            <button
-                                className="requests-btn reject"
-                                onClick={() => handleReject(request.requestId)}
-                            >
-                                Reject
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );

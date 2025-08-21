@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
-import { validateAuthToken } from "../services/auth";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import Users from "./Users";
+import FriendBar from "../../pages/home/FriendBar";
+import { validateAuthToken } from "../../services/auth";
+import Header from "../Header";
+import Sidebar from "../Sidebar";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
@@ -17,14 +17,13 @@ const HomeLayout = () => {
       <div className="home-header">
         <Header />
       </div>
-      <div className="home-main-wrapper">
+      <div className="home-main-wrapper" style={{ marginRight: "280px" }} >
+
         <Sidebar />
         <div className="home-main-content">
           <Outlet />
         </div>
-        <div className="home-right-sidebar">
-          <Users />
-        </div>
+        <FriendBar />
       </div>
     </div>
 

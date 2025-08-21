@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
-import "../css/Post.css";
-import { doGetComments, doPostComment } from "../services/comment";
-import { toggleLike } from "../services/post";
-import { doReport } from "../services/report";
+import "../../css/Post.css";
+import { doGetComments, doPostComment } from "../../services/comment";
+import { toggleLike } from "../../services/post";
+import { doReport } from "../../services/report";
 
 const Post = ({ posts, onRemove }) => {
   const [postStates, setPostStates] = useState({});
+  const [visiblePosts, setVisiblePosts] = useState({});
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
-  const [visiblePosts, setVisiblePosts] = useState({});
+
 
   const userId = parseInt(localStorage.getItem("userId"));
   useEffect(() => {

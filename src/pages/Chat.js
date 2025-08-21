@@ -80,11 +80,11 @@ const Chat = ({ friend, user }) => {
                 className="chat-avatar"
               />
             </div>
-            <div className="chat-user-details">
+            
+          </div>
+          <div className="chat-user-details">
               {friend.userName}
             </div>
-          </div>
-
         </div>
       </div>
       <div className="messages-container">

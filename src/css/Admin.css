@@ -178,29 +178,45 @@ admin-table tbody tr:hover {
       }.report-image:hover {
     transform: scale(1.05);
 }
-
+.modal-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  animation: modalFadeIn 0.3s ease-out;
+}
 .image-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(67, 67, 67, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    cursor: pointer;
-    backdrop-filter: blur(5px);
-  }
-  
-  .modal-image {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 16px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    animation: modalFadeIn 0.3s ease-out;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(67, 67, 67, 0.9);
+  display: flex;
+  align-items: center; /* remove or change for scroll */
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  overflow-y: auto; /* enable vertical scrolling */
+  padding: 2rem; /* optional, gives space around modal */
+  box-sizing: border-box;
+}
+
+.modal-post {
+  max-width: 800px; /* or whatever width you want */
+  width: 100%;
+  border-radius: 16px;
+  animation: modalFadeIn 0.3s ease-out;
+  padding: 2rem;
+  overflow-y: auto; /* scroll content inside modal */
+  max-height: 90vh; /* keep it inside viewport */
+}
+.image-modal::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+.modal-post::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
 
   @keyframes modalFadeIn {
     from {

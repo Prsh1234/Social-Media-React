@@ -52,34 +52,37 @@ const Friends = () => {
 
                 </ul>
             </div>
-            <div className="request-list">
-                {friendList.map((friend) => (
-                    <div key={friend.id} className="request-list-card">
-                        <div className="profile-pic">
-                            <img
-                                src={
-                                    friend.profilePic
-                                        ? `data:image/jpeg;base64,${friend.profilePic}`
-                                        : "/assets/profile.jpg"
-                                }
-                                alt={"Profile Pic"}
+            <div className="profile-friends-container">
 
-                            />
+                <div className="request-list">
+                    {friendList.map((friend) => (
+                        <div key={friend.id} className="request-list-card">
+                            <div className="profile-pic-friends">
+                                <img
+                                    src={
+                                        friend.profilePic
+                                            ? `data:image/jpeg;base64,${friend.profilePic}`
+                                            : "/assets/profile.jpg"
+                                    }
+                                    alt={"Profile Pic"}
+
+                                />
+                            </div>
+                            <div className="user-list-name-area">
+                                <h4>{friend.userName}</h4>
+                                <div className="mutual-friends-text">{friend.mutual} mutual Friends</div>
+                            </div>
+                            <div className="request-options">
+                                <button
+                                    className="requests-btn reject"
+                                    onClick={() => handleunfriend(friend.id)}
+                                >
+                                    Unfriend
+                                </button>
+                            </div>
                         </div>
-                        <div className="user-list-name-area">
-                            <h4>{friend.userName}</h4>
-                            <h8>{friend.mutual} mutual Friend</h8>
-                        </div>
-                        <div className="request-options">
-                            <button
-                                className="requests-btn reject"
-                                onClick={() => handleunfriend(friend.id)}
-                            >
-                                Unfriend
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import "../css/CreatePost.css";
-import { doPost } from "../services/post";
-import { getUserData } from "../services/user";
+import "../../css/CreatePost.css";
+import { doPost } from "../../services/post";
+import { getUserData } from "../../services/user";
 
 const CreatePost = ({ onPostSuccess }) => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [user, setUser] = useState([]);
   const [isPosting, setIsPosting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
   const userId = localStorage.getItem("userId");
   const handleChange = (e) => {
     setContent(e.target.value);
@@ -38,8 +37,6 @@ const CreatePost = ({ onPostSuccess }) => {
       console.log("Post saved!", result.data);
       setContent("");
       setImage(null);
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
       if (onPostSuccess) onPostSuccess(result.data);
     } else {
       console.error("Error posting:", "Failed to create post");
@@ -108,27 +105,24 @@ const CreatePost = ({ onPostSuccess }) => {
               <label htmlFor="image-upload" className="file-input-label">
                 Add Photo
               </label>
+              <div className="post-actions">
+
+                <button
+                  className={`post-btn ${(content.trim() || image) && !isPosting ? "active" : ""
+                    } ${isPosting ? "posting" : ""}`}
+                  disabled={(!content.trim() && !image) || isPosting}
+                  onClick={handlePost}
+                >
+                  {isPosting ? "Posting..." : "Share Post"}
+                </button>
+              </div>
             </div>
 
-            <div className="post-actions">
 
-              <button
-                className={`post-btn ${(content.trim() || image) && !isPosting ? "active" : ""
-                  } ${isPosting ? "posting" : ""}`}
-                disabled={(!content.trim() && !image) || isPosting}
-                onClick={handlePost}
-              >
-                {isPosting ? "Posting..." : "Share Post"}
-              </button>
-            </div>
           </div>
         </div>
       </div>
-      {showSuccess && (
-        <div className="post-success">
-          ✅ Post shared successfully!
-        </div>
-      )}
+
     </>
   );
 };

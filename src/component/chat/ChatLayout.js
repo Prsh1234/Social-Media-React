@@ -59,7 +59,7 @@ const ChatLayout = () => {
         <Sidebar />
         <div className="chat-layout">
           <div className="chat-sidebar">
-          <div className="sidebar-header">
+            <div className="sidebar-header">
               <div className="user-info">
                 <div className="user-avatar">
                   <img
@@ -77,6 +77,7 @@ const ChatLayout = () => {
                   <h1>{user.userName}</h1>
                 </div>
               </div>
+
             </div>
             <div className="friends-list">
               {friendList.map((friend) => (
@@ -99,10 +100,11 @@ const ChatLayout = () => {
 
                         />
                       </div>
-                      <div className="friend-details">
-                        <div className="friend-header">
-                          <h3 className="friend-name">{friend.userName}</h3>
-                        </div>
+
+                    </div>
+                    <div className="friend-details">
+                      <div className="friend-header">
+                        <h3 className="friend-name">{friend.userName}</h3>
                       </div>
                     </div>
                   </div>

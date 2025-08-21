@@ -23,7 +23,7 @@ const FriendofFriend = () => {
     }, [friendId]);
 
     return (
-        <div>
+        <div className="profile-friends-container">            
             <div className="request-list">
                 {friendList.map((friend) => (
                     <div key={friend.id} className="request-list-card">

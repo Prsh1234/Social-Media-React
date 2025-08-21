@@ -9,7 +9,7 @@ body {
 .chat-layout {
   height: 90vh;
   display: flex;
-  width: 90%;
+  width: 100%;
 }
 
 .chat-sidebar {
@@ -62,7 +62,7 @@ body {
 }
 
 .friend-card {
-  padding: 16px;
+  padding: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 12px;
@@ -94,10 +94,11 @@ body {
 }
 
 .friend-avatar {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #f3f4f6;
+  margin-right: 16px;
   color: #6b7280;
   display: flex;
   align-items: center;
@@ -146,17 +147,7 @@ body {
   color: #6b7280;
 }
 
-.unread-badge {
-  background: #3b82f6;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
+
 
 .friend-message {
   font-size: 14px;
@@ -291,19 +282,22 @@ body {
   justify-content: flex-start;
 }
 
+
 .message-content {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-end;  /* aligns avatar at bottom */
   gap: 8px;
   max-width: 70%;
   margin-left: 16px;
-
+  word-wrap: break-word;  /* allows long words to wrap */
+  overflow-wrap: break-word;
 }
+
 
 .message-content.sent {
-  flex-direction: row-reverse;
+  flex-direction: row-reverse;  /* avatar on right, bubble on left */
+  align-items: flex-end;        /* ensures bubble aligns with avatar bottom */
 }
-
 .message-sender-avatar {
   width: 24px;
   height: 24px;
@@ -317,13 +311,16 @@ body {
   margin-bottom: 4px;
 }
 
+
 .message-bubble {
   padding: 12px;
   border-radius: 18px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1);
+  display: inline-block;      /* important for wrapping */
+  max-width: 100%;            /* fill available space in container */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
-
 .message-bubble:hover {
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
 }
@@ -502,7 +499,12 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 10px;
   object-fit: cover;
   vertical-align: middle;
+}
+
+.sidebar-users .friends-list a,
+.sidebar-users .friends-list a:visited {
+    color: inherit;         /* keeps the text color the same */
+    text-decoration: none;  /* removes underline */
 }

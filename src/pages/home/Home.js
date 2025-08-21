@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
-import CreatePost from "../component/CreatePost";
-import Post from "../pages/Post";
-import { doGetTimelinePosts } from "../services/post";
+import CreatePost from "../../component/home/CreatePost";
+import Post from "./Post";
+import SuggestedUsers from "../../component/SuggestedUsers";   // ✅ import Users here
+import { doGetTimelinePosts } from "../../services/post";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -43,7 +44,7 @@ const Home = () => {
   // initial fetch
   useEffect(() => {
     fetchPosts(true);
-  }, []); // run only once
+  }, []); 
 
   // scroll for more
   useEffect(() => {
@@ -61,6 +62,10 @@ const Home = () => {
   return (
     <div>
       <CreatePost onPostSuccess={handlePostSuccess} />
+      
+      {/* ✅ Users carousel goes here */}
+      <SuggestedUsers />
+
       <Post posts={posts} onRemove={handlePostRemoved} />
       {loading && <div className="loader"><p>Loading...</p></div>}
     </div>
