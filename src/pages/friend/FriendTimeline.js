@@ -1,139 +1,142 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams,NavLink } from "react-router";
+import { useParams, NavLink } from "react-router";
 import "../../css/Post.css";
 import { doGetComments, doPostComment } from "../../services/comment";
 import { doGetUserPosts, toggleLike } from "../../services/post";
 import { doReport } from "../../services/report";
 
 const FriendTimeline = () => {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [page, setPage] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-    const [comments, setComments] = useState({});
-    const [commentInputs, setCommentInputs] = useState({});
-    const [visiblePosts, setVisiblePosts] = useState({});
-    const [postStates, setPostStates] = useState({});
-    const { friendId } = useParams();
-    const userId = localStorage.getItem("userId");
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [comments, setComments] = useState({});
+  const [commentInputs, setCommentInputs] = useState({});
+  const [visiblePosts, setVisiblePosts] = useState({});
+  const [postStates, setPostStates] = useState({});
+  const { friendId } = useParams();
+  const userId = localStorage.getItem("userId");
 
-    const fetchPosts = useCallback(async (reset = false) => {
-      console.log("fetch")
-      if (loading) return;
-      setLoading(true);
-      const currentPage = reset ? 0 : page;
-      const result = await doGetUserPosts(friendId, currentPage, 5);
-  
-      if (result.success) {
-        setPosts(prev => {
-          const newPosts = result.data.filter(
-            post => !prev.some(existing => existing.id === post.id)
-          );
-          return reset ? result.data : [...prev, ...newPosts];
-        });
-        setHasMore(result.data.length > 0);
-        setPage(prev => reset ? 1 : prev + 1);
+  const fetchPosts = useCallback(async (reset = false) => {
+    console.log("fetch")
+    if (loading) return;
+    setLoading(true);
+    const currentPage = reset ? 0 : page;
+    const result = await doGetUserPosts(friendId, currentPage, 5);
+
+    if (result.success) {
+      setPosts(prev => {
+        const newPosts = result.data.filter(
+          post => !prev.some(existing => existing.id === post.id)
+        );
+        return reset ? result.data : [...prev, ...newPosts];
+      });
+      setHasMore(result.data.length > 0);
+      setPage(prev => reset ? 1 : prev + 1);
+    } else {
+      console.error("Error loading posts:", result.error);
+    }
+    setLoading(false);
+  }, [loading, page, friendId]);
+
+  useEffect(() => {
+    const states = posts.reduce((acc, p) => {
+      acc[p.id] = { liked: p.liked, likeCount: p.likeCount };
+      return acc;
+    }, {});
+    setPostStates(states);
+  }, [posts]);
+
+  useEffect(() => {
+    fetchPosts(true);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight * 0.9 && hasMore && !loading) {
+        fetchPosts();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasMore, loading, fetchPosts]);
+
+  const handleReport = async (postId) => {
+    try {
+      const res = await doReport(postId, userId);
+      if (res.data.success) {
+        setPosts((prev) => prev.filter((p) => p.id !== postId));
       } else {
-        console.error("Error loading posts:", result.error);
+        alert("Failed to report post: " + res.data.message);
       }
-      setLoading(false);
-    }, [loading, page, friendId]);
+    } catch (err) {
+      console.error(err);
+      alert("Error reporting post");
+    }
+  };
 
-    useEffect(() => {
-      const states = posts.reduce((acc, p) => {
-        acc[p.id] = { liked: p.liked, likeCount: p.likeCount };
-        return acc;
-      }, {});
-      setPostStates(states);
-    }, [posts]);
+  const handleLike = async (postId) => {
+    const result = await toggleLike(postId, userId);
+    if (result.success) {
+      setPostStates((prev) => ({
+        ...prev,
+        [postId]: {
+          liked: result.data.liked,
+          likeCount: result.data.likeCount,
+        },
+      }));
+    }
+  };
 
-    useEffect(() => {
-      fetchPosts(true);
-    }, []);
-
-    useEffect(() => {
-      const handleScroll = () => {
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        if (scrollTop + clientHeight >= scrollHeight * 0.9 && hasMore && !loading) {
-          fetchPosts();
-        }
-      };
-  
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }, [hasMore, loading, fetchPosts]);
-
-    const handleReport = async (postId) => {
-      try {
-        const res = await doReport(postId, userId);
-        if (res.data.success) {
-          setPosts((prev) => prev.filter((p) => p.id !== postId));
-        } else {
-          alert("Failed to report post: " + res.data.message);
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Error reporting post");
-      }
-    };
-
-    const handleLike = async (postId) => {
-      const result = await toggleLike(postId, userId);
+  const handleToggleComments = async (postId) => {
+    if (!visiblePosts[postId]) {
+      const result = await doGetComments(postId);
       if (result.success) {
-        setPostStates((prev) => ({
-          ...prev,
-          [postId]: {
-            liked: result.data.liked,
-            likeCount: result.data.likeCount,
-          },
-        }));
+        setComments((prev) => ({ ...prev, [postId]: result.data }));
       }
-    };
-  
-    const handleToggleComments = async (postId) => {
-      if (!visiblePosts[postId]) {
-        const result = await doGetComments(postId);
-        if (result.success) {
-          setComments((prev) => ({ ...prev, [postId]: result.data }));
-        }
-      }
-      setVisiblePosts((prev) => ({ ...prev, [postId]: !prev[postId] }));
-    };
+    }
+    setVisiblePosts((prev) => ({ ...prev, [postId]: !prev[postId] }));
+  };
 
-    const handleChange = (postId, value) => {
-      setCommentInputs((prev) => ({ ...prev, [postId]: value }));
-    };
-  
-    const handleSubmit = async (postId) => {
-      const text = commentInputs[postId];
-      if (!text.trim()) return;
-  
-      const result = await doPostComment(postId, text);
+  const handleChange = (postId, value) => {
+    setCommentInputs((prev) => ({ ...prev, [postId]: value }));
+  };
+
+  const handleSubmit = async (postId) => {
+    const text = commentInputs[postId];
+    if (!text.trim()) return;
+
+    const result = await doPostComment(postId, text);
+    if (result.success) {
+      const result = await doGetComments(postId);
       if (result.success) {
-        const result = await doGetComments(postId);
-        if (result.success) {
-          setComments((prev) => ({ ...prev, [postId]: result.data }));
-        }
-        setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
-      } else {
-        console.error("Failed to post comment:", result.error);
+        setComments((prev) => ({ ...prev, [postId]: result.data }));
       }
-    };
+      setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
+    } else {
+      console.error("Failed to post comment:", result.error);
+    }
+  };
 
-    return (
+  return (
     <div>
       <div className="post-container">
         {posts.map(post => (
           <div key={post.id} className="post-card">
             <div className="profile-pic">
-              <img
-                src={
-                  post.profilePic
-                    ? `data:image/jpeg;base64,${post.profilePic}`
-                    : "/assets/profile.jpg"
-                }
-                alt="Profile Pic"
-              />
+              <NavLink to={post.posterId === userId ? "/profile/info" : `/friend/info/${post.posterId}`}>
+
+                <img
+                  src={
+                    post.profilePic
+                      ? `data:image/jpeg;base64,${post.profilePic}`
+                      : "/assets/profile.jpg"
+                  }
+                  alt="Profile Pic"
+                />
+              </NavLink>
             </div>
 
             <div className="post-data-area">
@@ -188,14 +191,9 @@ const FriendTimeline = () => {
                     {(comments[post.id] || []).map((c) => (
                       <div key={c.id} className="comment">
                         <div className="comment-avatar">
-                          <img
-                            src={
-                              c.profilePic
-                                ? `data:image/jpeg;base64,${c.profilePic}`
-                                : "/assets/profile.jpg"
-                            }
-                            alt="Profile Pic"
-                          />
+                          <NavLink to={c.userId === userId ? "/profile/info" : `/friend/info/${c.userId}`}>
+                            <img src={c.profilePic ? `data:image/jpeg;base64,${c.profilePic}` : "/assets/profile.jpg"} alt="Profile Pic" />
+                          </NavLink>
                         </div>
                         <div className="comment-content">
                           <strong>
@@ -233,8 +231,8 @@ const FriendTimeline = () => {
       {loading && <div className="loader"><p>Loading...</p></div>}
     </div>
   );
-  
-  
-  }
-  
-  export default FriendTimeline;
+
+
+}
+
+export default FriendTimeline;

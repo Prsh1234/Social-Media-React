@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router";
 import { sendFriendRequest } from "../services/friend";
 import { getAllUsers } from "../services/user";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const userId = localStorage.getItem("userId");
 
     const fetchUsers = async () => {
 
@@ -20,7 +21,7 @@ const Users = () => {
             console.error("Error loading users:", result.error);
 
         }
-        
+
     };
 
     useEffect(() => {
@@ -47,19 +48,29 @@ const Users = () => {
         <div className="user-list">
             {users.map((user) => (
                 <div key={user.id} className="user-list-card">
-                    <div className="profile-pic">
-                        <img
-                            src={
-                                user.profilePic
-                                    ? `data:image/jpeg;base64,${user.profilePic}`
-                                    : "/assets/profile.jpg"
-                            }
-                            alt={"Profile Pic"}
+                    <NavLink
+                        to={user.id === userId ? "/profile/info" : `/friend/info/${user.id}`}
+                        style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                        <div className="profile-pic">
+                            <img
+                                src={
+                                    user.profilePic
+                                        ? `data:image/jpeg;base64,${user.profilePic}`
+                                        : "/assets/profile.jpg"
+                                }
+                                alt={"Profile Pic"}
 
-                        />
-                    </div>
+                            />
+                        </div>
+                    </NavLink>
                     <div className="user-list-name-area">
-                        <h4>{user.userName}</h4>
+                        <h4><NavLink
+                            to={user.id === userId ? "/profile/info" : `/friend/info/${user.id}`}
+                            style={{ color: "inherit", textDecoration: "none" }}
+                        >
+                            {user.userName}
+                        </NavLink></h4>
                     </div>
                     <button
                         className="submit-btn-user-list"

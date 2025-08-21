@@ -28,27 +28,29 @@ const SignUp = () => {
         const { name, value } = e.target;
         setData({ ...data, [name]: value })
     }
-
     const handleBtnClick = async () => {
         const { errors: validationErrors, hasError } = validateSignUpData(data);
         setErrors(validationErrors);
-
+      
         if (!hasError) {
-            try {
-                const { confirmPassword, ...userData } = data;
-                const result = await registerUser(userData);
-                if (result.error) {
-                    // Show error returned from createUser
-                    setErrors(prev => ({ ...prev, email: result.error }));
-                } else {
-                    navigate('/login');
-                }
-            } catch (error) {
-                console.error(error);
-                // Handle other errors, e.g. network errors
+          try {
+            const { confirmPassword, ...userData } = data;
+            const result = await registerUser(userData);
+      
+            if (!result.success) {
+              // Show error message from server
+              setErrors(prev => ({ ...prev, email: result.message }));
+              console.error(result.message);
+            } else {
+              console.log("User registered successfully");
+              navigate('/login');
             }
+          } catch (error) {
+            console.error(error);
+            setErrors(prev => ({ ...prev, general: "Something went wrong. Please try again." }));
+          }
         }
-    }
+      };
 
 
 

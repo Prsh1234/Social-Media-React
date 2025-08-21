@@ -19,16 +19,17 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import Reports from './pages/admin/Reports';
 
 import AdminLayout from './component/admin/AdminLayout';
+import Index from './pages/Index';
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/index" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
 
-
+          <Route path="/index" element={<Index />} />
 
           <Route element={<HomeLayout />}>
             <Route path="/home" element={<Home />} />

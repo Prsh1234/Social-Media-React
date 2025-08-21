@@ -59,21 +59,22 @@ export const deleteUser = async (id) => {
         const response = await axios.delete(
             `${CONFIG.API_URL}/admin/deleteuser/${id}`,
             {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` },
             }
         );
-    
+
         return {
-            success: true,
+            success: response.data.success || false,
             data: response.data,
+            message: response.data.message || "",
         };
-    }catch (error) {
-    console.error("Error fetching users:", error);
-    return {
-        success: false,
-        error: error.message || "Unknown error",
-    };
-}
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        return {
+            success: false,
+            message: error.response?.data?.message || error.message || "Unknown error",
+        };
+    }
 };
 
 export const deletePost = async (id) => {
@@ -85,18 +86,18 @@ export const deletePost = async (id) => {
                 headers: { Authorization: `Bearer ${token}` }
             }
         );
-    
+
         return {
             success: true,
             data: response.data,
         };
-    }catch (error) {
-    console.error("Error fetching users:", error);
-    return {
-        success: false,
-        error: error.message || "Unknown error",
-    };
-}
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return {
+            success: false,
+            error: error.message || "Unknown error",
+        };
+    }
 };
 
 export const dismissReport = async (id) => {
@@ -108,16 +109,16 @@ export const dismissReport = async (id) => {
                 headers: { Authorization: `Bearer ${token}` }
             }
         );
-    
+
         return {
             success: true,
             data: response.data,
         };
-    }catch (error) {
-    console.error("Error fetching users:", error);
-    return {
-        success: false,
-        error: error.message || "Unknown error",
-    };
-}
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return {
+            success: false,
+            error: error.message || "Unknown error",
+        };
+    }
 };

@@ -8,7 +8,7 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: #e3eaf2;
+    background: linear-gradient(135deg, #667eea, #764ba2);
   }
   
   .login-box {

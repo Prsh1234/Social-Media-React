@@ -1,6 +1,5 @@
-
-
-html, body {
+html,
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   background: linear-gradient(180deg, #f7f8fc, #eef0f4);
   color: #1a1d29;
@@ -90,6 +89,8 @@ html, body {
 
 .friend-avatar-container {
   position: relative;
+  display: flex;
+  flex-direction: row;
 }
 
 .friend-avatar {
@@ -171,7 +172,8 @@ html, body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%; /* make it fill parent */
+  height: 100%;
+  /* make it fill parent */
 }
 
 .chat-header {
@@ -241,11 +243,14 @@ html, body {
 }
 
 .messages-container {
-  flex: 1;               
-  overflow-y: auto;       /* scroll inside */
+  flex: 1;
+  overflow-y: auto;
+  /* scroll inside */
   padding: 16px;
-  min-height: 0;          /* 🔑 prevents flex from overflowing */
+  min-height: 0;
+  /* 🔑 prevents flex from overflowing */
 }
+
 .messages-list {
   display: flex;
   flex-direction: column;
@@ -386,16 +391,21 @@ html, body {
 }
 
 @keyframes typing {
-  0%, 60%, 100% {
+
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
   }
+
   30% {
     transform: translateY(-10px);
   }
 }
 
 .chat-input-area {
-  flex-shrink: 0;         /* stay pinned at bottom */
+  flex-shrink: 0;
+  /* stay pinned at bottom */
   border-top: 1px solid #e5e7eb;
   background: white;
   padding: 16px;
@@ -412,8 +422,7 @@ html, body {
 }
 
 .chat-input {
-  width: 100%;
-  min-height: 44px;
+  width: 95%;
   padding: 12px 16px;
   border: 1px solid #d1d5db;
   border-radius: 24px;

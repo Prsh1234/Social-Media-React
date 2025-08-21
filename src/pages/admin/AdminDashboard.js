@@ -6,6 +6,8 @@ import { deleteUser, getUsers } from "../../services/admin";
 const AdminDashboard = () => {
     const userId = localStorage.getItem("userId");
     const [users, setUsers] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
+
     const fetchUsers = async () => {
         const res = await getUsers();
         setUsers(res.data);
@@ -15,22 +17,35 @@ const AdminDashboard = () => {
     useEffect(() => {
         fetchUsers();
     }, []);
-
     const deleteSelectedUser = async (id) => {
+        try {
+            const res = await deleteUser(id);
 
-        const res = await deleteUser(id)
-        if (res.success) {
-            const updatedUsers = users.filter((u) => u.id !== id);
-            setUsers(updatedUsers);
+            if (res.success) {
+                setUsers((prevUsers) => prevUsers.filter((u) => u.id !== id));
+                setErrorMessage(""); // clear old errors
+            } else {
+
+                setErrorMessage(res.message); // ✅ show backend message in UI
+            }
+        } catch (err) {
+            console.error("Error deleting user:", err);
+            setErrorMessage("Something went wrong. Please try again.");
         }
-
     };
 
     return (
+
         <div className="admin-container">
+
             <div className="admin-header">
                 <h1 className="admin-title">Users Dashboard</h1>
                 <p className="admin-subtitle">Manage Users </p>
+                {errorMessage && (
+                    <div className="error-banner" style={{ color: "red" }}>
+                        {errorMessage}
+                    </div>
+                )}
                 <div className="table-container">
                     {users.length === 0 ? (
                         <div className="empty-state">
@@ -91,10 +106,11 @@ const AdminDashboard = () => {
                                             </div>
                                         </td>
                                         <td className="admin-table-options">
+
                                             <button className="admin-table-button delete-option" value={user.id} onClick={() => deleteSelectedUser(user.id)}>Delete</button>
                                             <NavLink to={user.id === userId ? "/profile/info" : `/friend/info/${user.id}`}>
                                                 <button className="admin-table-button view-option">
-                                                    Dismiss Report
+                                                    View User
                                                 </button>
                                             </NavLink>
 

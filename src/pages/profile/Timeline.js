@@ -133,10 +133,13 @@ const Timeline = () => {
         {posts.map(post => (
           <div key={post.id} className="post-card">
             <div className="profile-pic">
-              <img
-                src={post.profilePic ? `data:image/jpeg;base64,${post.profilePic}` : "/assets/profile.jpg"}
-                alt="Profile Pic"
-              />
+              <NavLink to={post.posterId === userId ? "/profile/info" : `/friend/info/${post.posterId}`}>
+
+                <img
+                  src={post.profilePic ? `data:image/jpeg;base64,${post.profilePic}` : "/assets/profile.jpg"}
+                  alt="Profile Pic"
+                />
+              </NavLink>
             </div>
 
             <div className="post-data-area">
@@ -173,7 +176,9 @@ const Timeline = () => {
                     {(comments[post.id] || []).map(c => (
                       <div key={c.id} className="comment">
                         <div className="comment-avatar">
-                          <img src={c.profilePic ? `data:image/jpeg;base64,${c.profilePic}` : "/assets/profile.jpg"} alt="Profile Pic"/>
+                          <NavLink to={c.userId === userId ? "/profile/info" : `/friend/info/${c.userId}`}>
+                            <img src={c.profilePic ? `data:image/jpeg;base64,${c.profilePic}` : "/assets/profile.jpg"} alt="Profile Pic" />
+                          </NavLink>
                         </div>
                         <div className="comment-content">
                           <strong>

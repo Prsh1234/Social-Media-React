@@ -3,6 +3,9 @@ export const validateSignUpData = (data) => {
         email: '',
         password: '',
         confirmPassword: '',
+        firstName: '',
+        lastName: '',
+        userName: ''
     };
     let hasError = false;
 
@@ -39,6 +42,18 @@ export const validateSignUpData = (data) => {
         hasError = true;
     } else if (data.password !== data.confirmPassword) {
         errors.confirmPassword = 'Password and Confirm Password do not match';
+        hasError = true;
+    }
+    if (data.firstName.trim() === '') {
+        errors.firstName = 'First Name is required';
+        hasError = true;
+    }
+    if (data.lastName.trim() === '') {
+        errors.lastName = 'Last Name is required';
+        hasError = true;
+    }
+    if (data.userName.trim() === '') {
+        errors.userName = 'User Name is required';
         hasError = true;
     }
 

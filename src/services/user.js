@@ -7,11 +7,18 @@ const token = localStorage.getItem("AUTH_TOKEN");
 export const registerUser = async (newUser) => {
   try {
     const response = await axios.post(`${CONFIG.API_URL}/auth/register`, newUser);
-    console.log("Registering user:", newUser);
-    return response.data; // { success: true/false, message: "..." }
+    if(response.data.success) {
+      console.log("Registering user:", newUser);
+      return response.data; // { success: true/false, message: "..." }
+    }
+    else{
+      console.error("Registration failed:", response.data.message);
+      return { success: false, message: response.data.message };
+    }
   } catch (error) {
+    console.log(error)
     console.error("Registration failed:", error);
-    return { success: false, message: "Server error" };
+    return { success: false, message: error.message };
   }
 };
 

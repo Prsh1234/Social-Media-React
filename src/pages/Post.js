@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import "../css/Post.css";
-import { doGetComments, doPostComment } from "../services/comment"; 
-import { toggleLike } from "../services/post"; 
+import { doGetComments, doPostComment } from "../services/comment";
+import { toggleLike } from "../services/post";
 import { doReport } from "../services/report";
 
 const Post = ({ posts, onRemove }) => {
@@ -80,12 +80,14 @@ const Post = ({ posts, onRemove }) => {
     <div className="post-container">
       {posts.map((post) => (
         <div key={post.id} className="post-card">
-          <div className="profile-pic">
-            <img
-              src={post.profilePic ? `data:image/jpeg;base64,${post.profilePic}` : "/assets/profile.jpg"}
-              alt="Profile Pic"
-            />
-          </div>
+          <NavLink to={post.posterId === userId ? "/profile/info" : `/friend/info/${post.posterId}`}>
+            <div className="profile-pic">
+              <img
+                src={post.profilePic ? `data:image/jpeg;base64,${post.profilePic}` : "/assets/profile.jpg"}
+                alt="Profile Pic"
+              />
+            </div>
+          </NavLink>
 
           <div className="post-data-area">
             <h4>
@@ -119,7 +121,9 @@ const Post = ({ posts, onRemove }) => {
                 {(comments[post.id] || []).map((c) => (
                   <div key={c.id} className="comment">
                     <div className="comment-avatar">
-                      <img src={c.profilePic ? `data:image/jpeg;base64,${c.profilePic}` : "/assets/profile.jpg"} alt="Profile Pic"/>
+                      <NavLink to={c.userId === userId ? "/profile/info" : `/friend/info/${c.userId}`}>
+                        <img src={c.profilePic ? `data:image/jpeg;base64,${c.profilePic}` : "/assets/profile.jpg"} alt="Profile Pic" />
+                      </NavLink>
                     </div>
                     <div className="comment-content">
                       <strong>

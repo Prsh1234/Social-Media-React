@@ -7,7 +7,6 @@ import Sidebar from '../Sidebar';
 const AdminLayout = () => {
     const navigate = useNavigate();
     const [isValid, setIsValid] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const validate = async () => {
@@ -17,12 +16,10 @@ const AdminLayout = () => {
             } else {
                 setIsValid(true);
             }
-            setLoading(false);
         };
         validate();
     }, [navigate]);
 
-    if (loading) return <div>Loading...</div>;
 
     if (!isValid) return null;
     return (
@@ -36,19 +33,7 @@ const AdminLayout = () => {
                     <Outlet />
                 </div>
             </div>
-        </div>
-        //     <div className="home-container">
-
-        //     <div className="home-main-wrapper">
-        //       <Sidebar />
-        //       <div className="home-main-content">
-        //         <Outlet />
-        //       </div>
-        //       <div className="home-right-sidebar">
-        //         <Users />
-        //       </div>
-        //     </div>
-        //   </div>      
+        </div>  
     );
 }
 
