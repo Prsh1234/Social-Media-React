@@ -437,10 +437,10 @@ body {
 }
 
 .send-button {
-  width: 44px;
-  height: 44px;
+  width: 88px;
+  height: 40px;
   border: none;
-  border-radius: 50%;
+  border-radius: 16px;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   cursor: pointer;

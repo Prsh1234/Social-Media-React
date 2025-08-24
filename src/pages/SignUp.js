@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router";
 import { registerUser } from "../services/user";
 import { validateSignUpData } from "../utils/validateSignUpData";
 import '../css/Login.css';
+import { toast } from "react-toastify";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -40,13 +41,13 @@ const SignUp = () => {
             if (!result.success) {
               // Show error message from server
               setErrors(prev => ({ ...prev, email: result.message }));
-              console.error(result.message);
+                toast.error(result.message);
             } else {
-              console.log("User registered successfully");
-              navigate('/login');
+                toast.success("Registration successful, please login.");
+                navigate('/login');
             }
           } catch (error) {
-            console.error(error);
+            toast.error("Something went wrong. Please try again.");
             setErrors(prev => ({ ...prev, general: "Something went wrong. Please try again." }));
           }
         }

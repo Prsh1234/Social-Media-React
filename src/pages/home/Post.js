@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import { toast } from "react-toastify";
 import "../../css/Post.css";
 import { doGetComments, doPostComment } from "../../services/comment";
 import { toggleLike } from "../../services/post";
@@ -70,9 +71,11 @@ const Post = ({ posts, onRemove }) => {
       const commentsResult = await doGetComments(postId);
       if (commentsResult.success) {
         setComments((prev) => ({ ...prev, [postId]: commentsResult.data }));
+        toast.success("Comment posted successfully!");
       }
       setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
     } else {
+      toast.error("Failed to post comment!");
       console.error("Failed to post comment:", result.error);
     }
   };

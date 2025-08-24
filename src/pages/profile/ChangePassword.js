@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import { doLogout } from "../../services/auth";
 import { changePassword } from "../../services/user";
 import { validatePassword } from "../../utils/validateSignUpData";
@@ -22,7 +23,6 @@ const ChangePassword = () => {
     };
 
     const handleSave = async (e) => {
-        console.log(data.password,"hello",data.confirmPassword)
         const { errors: validationErrors, hasError } = validatePassword(data);
         setErrors(validationErrors);
         if (!hasError) {
@@ -32,14 +32,14 @@ const ChangePassword = () => {
             });;
             if (result.success) {
                 setData({
-                    currentPassword: "",
-                    password: "",
-                    confirmPassword: ""
-                  });
-                  doLogout(navigate);
-
-            } else {
-                alert("Error: " + result.error);
+                  currentPassword: "",
+                  password: "",
+                  confirmPassword: ""
+                });
+                toast.success("Password changed successfully!");
+                doLogout(navigate);
+              } else {
+                toast.error("Failed to change password!");
             }
         }
     };

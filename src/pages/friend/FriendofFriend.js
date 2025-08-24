@@ -12,7 +12,6 @@ const FriendofFriend = () => {
 
         if (result.success) {
             setFriendList(result.data);
-            console.log(result.data);
         } else {
             console.error("Error loading friends:", result.error);
         }

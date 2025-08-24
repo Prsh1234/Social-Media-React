@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getUserData, updateProfile } from "../../services/user";
+import { doDeleteAccount, getUserData, updateProfile } from "../../services/user";
 import "../../css/Profile.css";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Profile = () => {
     const [user, setUser] = useState({
@@ -12,6 +13,7 @@ const Profile = () => {
     });
     const [editing, setEditing] = useState(false);
     const userId = localStorage.getItem("userId");
+    const navigate = useNavigate();
     const fetchUser = async (userId) => {
         try {
             const response = await getUserData(userId);
@@ -32,16 +34,29 @@ const Profile = () => {
         try {
             const response = await updateProfile(user);
             if (response.success) {
-                alert("Profile updated successfully!");
                 setEditing(false);
+                toast.success("Profile updated successfully!");
             }
         } catch (err) {
-            console.error("Error updating profile:", err);
+                toast.error("Failed to update profile!");
         }
     };
     useEffect(() => {
         fetchUser(userId);
     }, [userId]);
+    const deleteAccount = async() => {
+        try {
+            const response = await doDeleteAccount(userId);
+            if (response.success) {
+                toast.success("Account deleted successfully!");
+                navigate("/login");
+            }else{
+                toast.error("Failed to delete account!");
+            }
+        }catch(error){
+                toast.error("Failed to delete account!");
+        }
+    }
 
     return (
         <div className="profile-container">
@@ -107,7 +122,12 @@ const Profile = () => {
             <div className="profile-actions">
                 <NavLink to="/profile/changePassword" className="btn btn-edit">Edit Password</NavLink>
             </div>
-
+            <div className="profile-actions">
+            <button onClick={() => deleteAccount()} className="btn btn-delete">
+                Edit
+            </button>
+            </div>
+            
 
         </div>
     );

@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, NavLink } from "react-router";
+import { toast } from "react-toastify";
 import "../../css/Post.css";
 import { doGetComments, doPostComment } from "../../services/comment";
 import { doGetUserPosts, toggleLike } from "../../services/post";
@@ -18,7 +19,6 @@ const FriendTimeline = () => {
   const userId = localStorage.getItem("userId");
 
   const fetchPosts = useCallback(async (reset = false) => {
-    console.log("fetch")
     if (loading) return;
     setLoading(true);
     const currentPage = reset ? 0 : page;
@@ -68,13 +68,13 @@ const FriendTimeline = () => {
       const res = await doReport(postId, userId);
       if (res.data.success) {
         setPosts((prev) => prev.filter((p) => p.id !== postId));
+        toast.success("Post reported successfully!");
       } else {
-        alert("Failed to report post: " + res.data.message);
+        toast.error("Failed to report post: ");
       }
     } catch (err) {
       console.error(err);
-      alert("Error reporting post");
-    }
+      toast.error("Error reporting post");}
   };
 
   const handleLike = async (postId) => {
@@ -113,9 +113,12 @@ const FriendTimeline = () => {
       const result = await doGetComments(postId);
       if (result.success) {
         setComments((prev) => ({ ...prev, [postId]: result.data }));
+        toast.success("Comment posted successfully!");
+
       }
       setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
     } else {
+      toast.error("Failed to post comment!");
       console.error("Failed to post comment:", result.error);
     }
   };

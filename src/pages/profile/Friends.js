@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import { toast } from "react-toastify";
 import { getFriends, unfriend } from "../../services/friend";
 
 
@@ -12,7 +13,6 @@ const Friends = () => {
         const result = await getFriends(userId);
         if (result.success) {
             setFriendList(result.data);
-            console.log(result.data);
         } else {
             console.error("Error loading friends:", result.error);
         }
@@ -23,6 +23,9 @@ const Friends = () => {
         const result = await unfriend(id);
         if (result.success) {
             setFriendList(prev => prev.filter(r => r.id !== id));
+            toast.success("Friend removed!");
+        }else{
+            toast.error("Failed to remove friend!");
         }
     };
 

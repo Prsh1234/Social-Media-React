@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { doLogin } from "../services/auth";
 import { validateLoginData } from "../utils/validateLoginData";
 import '../css/Login.css';
+import { toast } from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -33,8 +34,9 @@ const Login = () => {
             const loginStatus = await doLogin(data.email, data.password);
             if (loginStatus.error) {
                 setErrors(prev => ({ ...prev, login: loginStatus.error }));
-                console.log("roor")
+                toast.error("Login Failed!Try again.");
             } else {
+                toast.success("Login successful, welcome");
                 navigate('/home');
             }
 

@@ -7,7 +7,6 @@ export const registerUser = async (newUser) => {
   try {
     const response = await axios.post(`${CONFIG.API_URL}/auth/register`, newUser);
     if(response.data.success) {
-      console.log("Registering user:", newUser);
       return response.data; // { success: true/false, message: "..." }
     }
     else{
@@ -15,7 +14,6 @@ export const registerUser = async (newUser) => {
       return { success: false, message: response.data.message };
     }
   } catch (error) {
-    console.log(error)
     console.error("Registration failed:", error);
     return { success: false, message: error.message };
   }
@@ -46,7 +44,6 @@ export const getAllUsers = async () => {
 export const getUserData = async (userId) => {
   const token = localStorage.getItem("AUTH_TOKEN");
   try {
-    console.log(userId);
     const response = await axios.get(`${CONFIG.API_URL}/user/userdata?currentUserId=${userId}`,
     {
         headers: { Authorization: `Bearer ${token}` }
@@ -97,7 +94,12 @@ export const changePassword = async ({ currentPassword, newPassword }) => {
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Error changing password:", error);
-    return { success: false, error: error.response?.data || "Server error" };
+    const errorMessage =
+      error.response?.data?.error || // backend sends { error: "Incorrect Password" }
+      error.response?.data || // backend sends "User not found"
+      "Server error";
+
+    return { success: false, error: errorMessage };
   }
 };
 
@@ -128,5 +130,29 @@ export const doUpload = async (file, type, userId) => {
       error.response?.data?.error ||
       "Upload failed";
     return { success: false, error: message };
+  }
+};
+
+export const doDeleteAccount = async (id) => {
+  try {
+      const token = localStorage.getItem("AUTH_TOKEN");
+      const response = await axios.delete(
+          `${CONFIG.API_URL}/user/deleteuser/${id}`,
+          {
+              headers: { Authorization: `Bearer ${token}` },
+          }
+      );
+
+      return {
+          success: response.data.success || false,
+          data: response.data,
+          message: response.data.message || "",
+      };
+  } catch (error) {
+      console.error("Error deleting user:", error);
+      return {
+          success: false,
+          message: error.response?.data?.message || error.message || "Unknown error",
+      };
   }
 };

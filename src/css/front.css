@@ -44,16 +44,15 @@ body {
   }
  
   /* Hero Section */
+
   .hero {
     min-height: 100vh;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
+    background: url("E:\\social-media-react\\public\\assets\\logo.png") center/cover no-repeat; /* <-- your image */
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
   }
- 
-
   
   .hero-content {
     display: grid;
@@ -75,6 +74,7 @@ body {
     margin-bottom: 24px;
     line-height: 1.1;
   }
+
   
   .hero-accent {
     color: #fbbf24;

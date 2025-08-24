@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import "../../css/CreatePost.css";
 import { doPost } from "../../services/post";
 import { getUserData } from "../../services/user";
@@ -34,13 +35,12 @@ const CreatePost = ({ onPostSuccess }) => {
     setIsPosting(false);
 
     if (result.success) {
-      console.log("Post saved!", result.data);
+      toast.success("Your post has been shared successfully!");
       setContent("");
       setImage(null);
       if (onPostSuccess) onPostSuccess(result.data);
     } else {
-      console.error("Error posting:", "Failed to create post");
-      alert("Failed to create post. Please try again.");
+      toast.error("Failed to create post. Please try again.");
     }
   };
 

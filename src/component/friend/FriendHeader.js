@@ -5,6 +5,7 @@ import { getUserData } from "../../services/user";
 import { sendFriendRequest, unfriend, acceptFriendRequest, rejectFriendRequest } from "../../services/friend";
 import axios from "axios";
 import CONFIG from "../../config";
+import { toast } from "react-toastify";
 
 const FriendHeader = () => {
   const [coverPreview, setCoverPreview] = useState("/assets/cover.jpg");
@@ -53,19 +54,26 @@ const FriendHeader = () => {
   // Action handlers
   const handleSendRequest = async () => {
     const res = await sendFriendRequest(Number(friendId));
-    if (res.success) setFriendStatus("request-sent");
-    fetchFriendStatus();
+    if (res.success) {
+      toast.success("Friend request sent successfully!");
+      setFriendStatus("request-sent");
+      fetchFriendStatus();
+  }
   };
 
   const handleUnfriend = async () => {
     const res = await unfriend(Number(friendId));
-    if (res.success) setFriendStatus("not-friend");
-    fetchFriendStatus();
+    if (res.success) {
+      toast.success("Friend Removed!");
+      setFriendStatus("not-friend");
+      fetchFriendStatus();
+    }
   };
 
   const handleAcceptRequest = async () => {
     const res = await acceptFriendRequest(requestId);
     if (res.success) {
+      toast.success("Friend request accepted!");
       setFriendStatus("friend");
       fetchFriendStatus();
     }
@@ -74,6 +82,7 @@ const FriendHeader = () => {
   const handleCancelRequest = async () => {
     const res = await rejectFriendRequest(requestId);
     if (res.success) {
+      toast.success("Friend request Removed!");
       setFriendStatus("not-friend");
       fetchFriendStatus();
     }

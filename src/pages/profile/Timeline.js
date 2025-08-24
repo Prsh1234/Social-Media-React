@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { NavLink } from "react-router";
+import { toast } from "react-toastify";
 import "../../css/Post.css";
 import { doGetComments, doPostComment } from "../../services/comment";
 import { deletePost, doGetUserPosts, toggleLike } from "../../services/post";
@@ -70,6 +71,9 @@ const Timeline = () => {
     const result = await deletePost(postId);
     if (result.success) {
       setPosts(prev => prev.filter(p => p.id !== postId));
+      toast.success("Post deleted successfully!");
+    }else{
+      toast.error("Failed to delete post!");
     }
   };
 
@@ -78,12 +82,13 @@ const Timeline = () => {
       const res = await doReport(postId, userId);
       if (res.data.success) {
         setPosts(prev => prev.filter(p => p.id !== postId));
+        toast.success("Post reported successfully!");
       } else {
-        alert("Failed to report post: " + res.data.message);
+        toast.error("Failed to report post");
       }
     } catch (err) {
       console.error(err);
-      alert("Error reporting post");
+      toast.error("Failed to report post");
     }
   };
 
@@ -120,10 +125,12 @@ const Timeline = () => {
       const commentsResult = await doGetComments(postId);
       if (commentsResult.success) {
         setComments(prev => ({ ...prev, [postId]: commentsResult.data }));
+        toast.success("Comment posted successfully!");
       }
       setCommentInputs(prev => ({ ...prev, [postId]: "" }));
     } else {
       console.error("Failed to post comment:", result.error);
+      toast.error("Failed to post comment!");
     }
   };
 

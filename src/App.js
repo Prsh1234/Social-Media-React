@@ -17,10 +17,24 @@ import FriendofFriend from './pages/friend/FriendofFriend';
 import ChatLayout from './component/chat/ChatLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import Reports from './pages/admin/Reports';
-
+import 'react-toastify/dist/ReactToastify.css';
 import AdminLayout from './component/admin/AdminLayout';
 import Index from './pages/Index';
+import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+
+
 function App() {
+  const [role, setRole] = useState(localStorage.getItem("role") || "");
+
+  // Optional: subscribe to role changes dynamically if you set role on login
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setRole(localStorage.getItem("role") || "");
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
   return (
     <>
       <BrowserRouter>
@@ -55,14 +69,17 @@ function App() {
             <Route path="/friend/friends/:friendId" element={<FriendofFriend />} />
           </Route>
 
-          <Route path="/admin" element={localStorage.getItem("role") === "ADMIN" ? <AdminLayout /> : <Navigate to="/home" />} >
-            <Route path="/admin/Dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/Reports" element={<Reports />} />
+          <Route path="/admin/*" element={
+            role === "ADMIN" ? <AdminLayout /> : <Navigate to="/home" replace />
+          }>
+            <Route path="Dashboard" element={<AdminDashboard />} />
+            <Route path="Reports" element={<Reports />} />
           </Route>
 
 
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </>
   );
 }

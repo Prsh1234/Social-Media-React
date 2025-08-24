@@ -238,7 +238,18 @@
   width: 18px;
   height: 18px;
 }
+.header-title-text {
+  text-decoration: none;
+  color: white;
+  font-size: large;
+}
 
+.header-title-text:visited,
+.header-title-text:hover,
+.header-title-text:active {
+  text-decoration: none;
+  color: white;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .header {

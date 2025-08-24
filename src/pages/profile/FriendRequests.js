@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import { toast } from "react-toastify";
 
 import { acceptFriendRequest, GetFriendRequests, rejectFriendRequest } from "../../services/friend";
 
@@ -12,7 +13,6 @@ const FriendRequests = () => {
 
         if (result.success) {
             setRequestList(result.data);
-            console.log(result.data);
         } else {
             console.error("Error loading requests:", result.error);
         }
@@ -22,6 +22,10 @@ const FriendRequests = () => {
         const result = await acceptFriendRequest(id);
         if (result.success) {
             setRequestList(prev => prev.filter(r => r.requestId !== id));
+            toast.success("Friend request accepted!");
+        }
+        else{
+            toast.error("Failed to accept friend request!");
         }
     };
 
@@ -29,6 +33,9 @@ const FriendRequests = () => {
         const result = await rejectFriendRequest(id);
         if (result.success) {
             setRequestList(prev => prev.filter(r => r.requestId !== id));
+            toast.success("Friend request rejected!");
+        }else{
+            toast.error("Failed to reject friend request!");
         }
     };
 

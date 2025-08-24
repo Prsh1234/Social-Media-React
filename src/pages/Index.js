@@ -9,7 +9,7 @@ const Index = () => {
             description: "Chat instantly with friends and groups. Share photos, videos, and reactions in real-time.",
             icon: "💬"
         },
-        
+
         {
             title: "Privacy First",
             description: "Your data is yours. Advanced privacy controls and end-to-end encryption keep you safe.",
@@ -35,13 +35,15 @@ const Index = () => {
 
                             <p className="hero-description">
                                 Join millions of people sharing their stories, connecting with friends,
-                                and discovering amazing content on Us.
+                                and discovering amazing content across the Cosmos on InterAstral Denizens.
                             </p>
 
                             <div className="hero-buttons">
                                 <NavLink to="/login" ><button className="btn-hero">Get Started</button></NavLink>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </section>
@@ -51,10 +53,10 @@ const Index = () => {
                         <h2 className="features-title">
                             Why Choose
                             <br />
-                            <span className="features-accent">Us?</span>
+                            <span className="features-accent">InterAstral Denizens?</span>
                         </h2>
                         <p className="features-description">
-                            Discover the features that make Us the most engaging
+                            Discover the features that make InterAstral Denizens the most engaging
                             and secure social media platform.
                         </p>
                     </div>
@@ -71,7 +73,7 @@ const Index = () => {
                     </div>
                 </div>
             </section>
-            
+
         </div>
     );
 };

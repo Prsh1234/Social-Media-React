@@ -5,6 +5,7 @@ import { sendFriendRequest } from "../services/friend";
 import { getAllUsers } from "../services/user";
 import "../css/SuggestedUsers.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 
 const SuggestedUsers = () => {
@@ -30,6 +31,7 @@ const SuggestedUsers = () => {
     try {
       const result = await sendFriendRequest(friendId);
       if (result.success) {
+        toast.success("Friend request sent successfully!");
         setUsers(prev => prev.filter(r => r.id !== friendId));
       } else {
         console.error(result.message || result.error);

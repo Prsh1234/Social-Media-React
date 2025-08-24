@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 import "../css/Header.css";
 import { doLogout } from "../services/auth";
@@ -47,10 +47,8 @@ const Header = () => {
 
         if (clickedId === currentId) {
             navigate(`/profile/info`);
-            console.log("profile");
         } else {
             navigate(`/friend/info/${clickedId}`);
-            console.log("friend");
         }
 
         setQuery("");
@@ -61,6 +59,9 @@ const Header = () => {
     return (
         <header className="header">
             <div className="header-container">
+                <div className="title">
+                    <NavLink to="/home" className="header-title-text">InterAstral Denizens</NavLink>
+                </div>
                 <div className="search-container">
                     <div className="search-input-wrapper">
                         <svg className="search-icon" viewBox="0 0 24 24">

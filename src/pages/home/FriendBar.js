@@ -19,6 +19,8 @@ const FriendBar = () => {
     return (
         <div className="sidebar-users">
             <nav className="sidebar-nav">
+            <div className="sidebar-header-title" style={{paddingLeft:"20px"}}><h2>Friends</h2></div>
+
                 <div className="friends-list">
                     {friendList.map((friend) => (
                         <NavLink className="sidebar-link"
